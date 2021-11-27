@@ -6,6 +6,8 @@ import java.awt.event.*;
 
 import javax.swing.JPanel;
 
+import State.StateManager;
+
 public class GamePanel extends JPanel implements Runnable, KeyListener {
 
     public static final int WIDTH = 1280;
@@ -18,6 +20,8 @@ public class GamePanel extends JPanel implements Runnable, KeyListener {
 
     private BufferedImage image;
     private Graphics2D g;
+
+    private StateManager stateManager;
 
     public GamePanel() {
         super();
@@ -41,6 +45,8 @@ public class GamePanel extends JPanel implements Runnable, KeyListener {
         g = (Graphics2D) image.getGraphics();
 
         running = true;
+
+        stateManager = new StateManager();
     }
 
     public void run() {
@@ -76,9 +82,11 @@ public class GamePanel extends JPanel implements Runnable, KeyListener {
     }
 
     private void update() {
+        stateManager.update();
     }
 
     private void draw() {
+        stateManager.draw(g);
     }
 
     private void drawToScreen() {
@@ -91,9 +99,11 @@ public class GamePanel extends JPanel implements Runnable, KeyListener {
     }
 
     public void keyPressed(KeyEvent key) {
+        stateManager.keyPressed(key.getKeyCode());
     }
 
     public void keyReleased(KeyEvent key) {
+        stateManager.keyReleased(key.getKeyCode());
     }
 
 }
