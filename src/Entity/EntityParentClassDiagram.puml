@@ -1,0 +1,111 @@
+@startuml
+class Animation {
+// playedOnce = false
+- constructor():
+==
+// calculate elapsed_time
+// update currentFrame and startTime
+// based on delay, currentFrames and frame length
++ update(): void
++ setter()
++ getter()
++ setFrames(BufferedImage[] frames): void
+--
+BufferedImage[] frames
+int currentFrame
+long startTime
+long delay
+boolean playedOnce
+}
+class TileMap {
+// this also assign bounds and drawing
+- constructor(int tile_size):
+==
+--position--
+double x
+double y
+--bounds--
+int xmin
+int ymin
+int xmax
+int ymax
+double tween
+--map--
+int[][] map
+int tileSize
+int numRows
+int numCols
+int width
+int height
+--tileset--
+BufferedImage tileset
+int numTilesAcross
+Tile[][] tiles
+--drawing--
+int rowOffset
+int colOffset
+int numRowsToDraw
+int numColsToDraw
+}
+abstract class MapObject {
+- constructor(TileMap)
+==
++ getter()
++ notOnScreen(): bool
++ intersects(MapObject): bool // Rectangle collision box
++ getRectangle(): Rectangle // pos - collision box
++ calculateCorners(double x, double y): void
++ checkTileMapCollision(): void
+@overriden by children
++ draw(java.awt.Graphics2D): void
+==protected==
+--tile stuff--
+TileMap tileMap
+int tileSize
+double xmap
+double ymap
+--position and vector--
+double x
+double y
+double dx
+double dy
+--dimensions--
+int width
+int height
+--collision box--
+int cwidth
+int cheight
+--collision--
+int currRow
+int currCol
+double xdest
+double ydest
+double xtemp
+double ytemp
+boolean topLeft
+boolean topRight
+boolean bottomLeft
+boolean bottomRight
+--animation--
+Animation animation
+int currentAction
+int previousAction
+boolean facingRight
+--movement--
+boolean left
+boolean right
+boolean up
+boolean down
+boolean jumping
+boolean falling
+
+--movement attributes--
+double moveSpeed
+double maxSpeed
+double stopSpeed
+double fallSpeed
+double maxFallSpeed
+double jumpStart
+double stopJumpSpeed
+}
+@enduml
