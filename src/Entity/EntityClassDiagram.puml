@@ -19,9 +19,8 @@ int IDLE = 0
 int WALKING = 1
 int JUMPING = 2
 int FALLING = 3
-int GLIDING = 4
-int FIREBALL = 5
-int SCRATCHING = 6
+int FIREBALL = 4
+int SCRATCHING = 5
 --sound--
 HashMap<String, AudioPlayer> sfx
 --player stuff--
