@@ -1,0 +1,15 @@
+@startuml
+class Tile {
+- constructor(BufferedImage image, int type)
+==
++ getImage(): BufferedImage
++ getTYpe(): int
+== private ==
+BufferedImage image;
+int type;
+== public static final ==
+// tile types
+int NORMAL = 0;
+int BLOCKED = 1;
+}
+@enduml
