@@ -3,7 +3,7 @@ class LevelState extends GameState {
 // init()
 - constructor(GameStateManager gsm)
 ==
-@override GameState Method
++ @override GameState Method
 == private ==
 TileMap tileMap;
 Background bg;
