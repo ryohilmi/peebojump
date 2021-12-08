@@ -10,8 +10,8 @@ import State.StateManager;
 
 public class GamePanel extends JPanel implements Runnable, KeyListener {
 
-    public static final int WIDTH = 1280;
-    public static final int HEIGHT = 720;
+    public static final int WIDTH = 800;
+    public static final int HEIGHT = 600;
 
     private Thread thread;
     private boolean running;
