@@ -1,0 +1,27 @@
+@startuml
+class LevelState extends GameState {
+// init()
+- constructor(GameStateManager gsm)
+==
++ @override GameState Method
+== private ==
+TileMap tileMap;
+Background bg;
+
+Player player;
+
+ArrayList<Enemy> enemies;
+ArrayList<Explosion> explosions;
+
+HUD hud;
+
+AudioPlayer bgMusic;
+}
+Player <-- LevelState:composite <
+Enemy <-- LevelState:composite <
+Explosion <-- LevelState:composite <
+Background <-- LevelState:composite <
+TileMap <-- LevelState:composite <
+HUD <-- LevelState:composite <
+AudioPlayer <-- LevelState:composite <
+@enduml

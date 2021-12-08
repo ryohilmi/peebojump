@@ -1,0 +1,13 @@
+@startuml
+class AudioPlayer {
+// try to read resource
+- constructor(String stream)
+==
++ play(): void
++ stop(): void
++ cloas(): void
+== private ==
+Clip clip
+}
+
+@enduml

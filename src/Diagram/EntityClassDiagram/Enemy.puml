@@ -1,0 +1,56 @@
+@startuml
+class Enemy extends MapObject{
+- constructor(TileMap)
+==
++ isDead(): bool
++ getDamage(): int
++ hit(int damage): void
+@to be overriden by children
++ update()
+--
+boolean dead
+int damage
+boolean flinching
+long flinchTimer
+}
+class Kadal {
+// manually assigning MapObject atr
+// try to load sprites
+// set facing
+- constructor(TileMap)
+==
++ getNextPosition(): void
++ update(): void
++ draw(Graphics2D): void
+--tounge atk--
+bool is_firing
+int cooldown
+}
+class CarnivorePlant {
+// manually assigning MapObject atr
+// try to load sprites
+// set facing
+- constructor(TileMap)
+==
++ getNextPosition(): void
++ update(): void
++ draw(Graphics2D): void
+--devouring--
+bool touching_player
+int duration
+}
+class Landak {
+// manually assigning MapObject atr
+// try to load sprites
+// set facing
+- constructor(TileMap)
+==
++ getNextPosition(): void
++ update(): void
++ draw(Graphics2D): void
+--idk what atk he has--
+}
+Enemy <|-- Landak
+Enemy <|-- Kadal
+Enemy <|-- CarnivorePlant
+@enduml

@@ -1,0 +1,25 @@
+@startuml
+class Explosion {
+// try to read explosion gif
+// assign to buffered image sprite
+- constructor(int x, int y)
+==
++ update(): void
++ shouldRemove(): bool
++ setMapPosition(): void
++ draw(Graphics2D g): void
+== private ==
+int x;
+int y;
+int xmap;
+int ymap;
+int width;
+int height;
+
+Animation animation;
+BufferedImage[] sprites;
+
+boolean remove;
+}
+
+@enduml

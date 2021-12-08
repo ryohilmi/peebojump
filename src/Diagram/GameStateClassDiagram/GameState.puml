@@ -1,0 +1,12 @@
+@startuml
+abstract class GameState {
+==protected==
+GameStateManager gsm
+==public abstract void==
++ init()
++ update()
++ draw(java.awt.Graphics2D g)
++ keypressed(int key)
++ keyreleased(int key)
+}
+@enduml

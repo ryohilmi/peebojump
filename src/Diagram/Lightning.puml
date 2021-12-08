@@ -1,0 +1,17 @@
+@startuml
+class Lightning {
+// try to read lightning gif
+// assign to buffered image sprite
+- constructor(TileMap tm, boolean right)
+==
++ setHit(): void
++ update(): void
++ draw(Graphics2D g): void
++ shouldRemove(): bool
+== private ==
+boolean hit;
+boolean remove;
+BufferedImage[] sprites;
+BufferedImage[] hitSprites;
+}
+@enduml

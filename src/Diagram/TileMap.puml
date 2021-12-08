@@ -1,0 +1,33 @@
+@startuml
+class TileMap {
+// this also assign bounds and drawing
+- constructor(int tile_size):
+==
+--position--
+double x
+double y
+--bounds--
+int xmin
+int ymin
+int xmax
+int ymax
+double tween
+--map--
+int[][] map
+int tileSize
+int numRows
+int numCols
+int width
+int height
+--tileset--
+BufferedImage tileset
+int numTilesAcross
+Tile[][] tiles
+--drawing--
+int rowOffset
+int colOffset
+int numRowsToDraw
+int numColsToDraw
+}
+Tile <-- TileMap : composite <
+@enduml

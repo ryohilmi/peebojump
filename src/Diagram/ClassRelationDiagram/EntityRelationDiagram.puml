@@ -1,0 +1,14 @@
+@startuml
+abstract class MapObject
+TileMap <-- MapObject : composite <
+Animation <-- MapObject : composite <
+MapObject <|-- Player
+MapObject <|-- Enemy
+MapObject <|-- Lightning
+MapObject <|-- Explosion
+Lightning <-- Player : composite <
+Explosion <-- Player : composite <
+Enemy <|-- Landak
+Enemy <|-- Kadal
+Enemy <|-- CarnivorePlant
+@enduml

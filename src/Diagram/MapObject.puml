@@ -1,0 +1,63 @@
+@startuml
+abstract class MapObject {
+- constructor(TileMap)
+==
++ getter()
++ notOnScreen(): bool
++ intersects(MapObject): bool // Rectangle collision box
++ getRectangle(): Rectangle // pos - collision box
++ calculateCorners(double x, double y): void
++ checkTileMapCollision(): void
+@overriden by children
++ draw(java.awt.Graphics2D): void
+==protected==
+--tile stuff--
+TileMap tileMap
+int tileSize
+double xmap
+double ymap
+--position and vector--
+double x
+double y
+double dx
+double dy
+--dimensions--
+int width
+int height
+--collision box--
+int cwidth
+int cheight
+--collision--
+int currRow
+int currCol
+double xdest
+double ydest
+double xtemp
+double ytemp
+boolean topLeft
+boolean topRight
+boolean bottomLeft
+boolean bottomRight
+--animation--
+Animation animation
+int currentAction
+int previousAction
+boolean facingRight
+--movement--
+boolean left
+boolean right
+boolean up
+boolean down
+boolean jumping
+boolean falling
+
+--movement attributes--
+double moveSpeed
+double maxSpeed
+double stopSpeed
+double fallSpeed
+double maxFallSpeed
+double jumpStart
+double stopJumpSpeed
+}
+@enduml

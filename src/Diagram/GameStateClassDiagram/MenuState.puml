@@ -1,0 +1,23 @@
+@startuml
+class MenuState extends GameState{
+// try to load menu gif and assign to bg
+// assign title color and font
+- constructor(GameStateManager gsm)
+==
++ @override GameState method
+== private ==
+Background bg;
+
+int currentChoice = 0;
+String[] options = {
+    "Start",
+    "Help",
+    "Quit"
+};
+
+Color titleColor;
+Font titleFont;
+
+Font font;
+}
+@enduml

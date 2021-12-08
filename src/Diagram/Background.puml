@@ -1,0 +1,21 @@
+@startuml
+class Background {
+// try to read s and assign image
+// assign moveScale
+- Background(String s, double ms)
+==
++ setPosition(double x, double y): void
++ setVector(double dx, double dy): void
++ update(): void
++ draw(Graphics2D g): void
+== private ==
+BufferedImage image;
+
+double x;
+double y;
+double dx;
+double dy;
+
+double moveScale;
+}
+@enduml
