@@ -4,6 +4,8 @@ TileMap <-- MapObject : composite <
 Animation <-- MapObject : composite <
 MapObject <|-- Player
 MapObject <|-- Enemy
+MapObject <|-- Lightning
+MapObject <|-- Explosion
 Enemy <|-- Landak
 Enemy <|-- Kadal
 Enemy <|-- CarnivorePlant

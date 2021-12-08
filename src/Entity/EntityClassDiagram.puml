@@ -19,7 +19,7 @@ int IDLE = 0
 int WALKING = 1
 int JUMPING = 2
 int FALLING = 3
-int FIREBALL = 4
+int LIGHTNING = 4
 int SCRATCHING = 5
 --sound--
 HashMap<String, AudioPlayer> sfx
@@ -31,18 +31,15 @@ int maxFire
 boolean dead
 boolean flinching
 long flinchTimer
---fireball--
-// change to ranged atk?
+--lightning--
 boolean firing
-int fireCost
-int fireBallDamage
-ArrayList<FireBall> fireBalls
+int lightningCost
+int lightningDamage
+ArrayList<Lightning> lightnings
 --scratch--
 boolean scratching
 int scratchDamage
 int scratchRange
---gliding--
-boolean gliding
 --animations--
 ArrayList<BufferedImage[]> sprites
 final int[] numFrames = {
