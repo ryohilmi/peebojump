@@ -1,0 +1,36 @@
+@startuml
+class GamePanel extends JPanel implements Runnable, KeyListener {
+- constructor()
+==
++ init(): void
++ update(): void
++ draw(): void
++ drawToScreen(): void
+== overrides method ==
++ addNotify(): void
+== implements method==
++ run(): void
++ keyTyped(KeyEvent key): void
++ keyPressed(KeyEvent key): void
++ keyReleased(KeyEvent key): void
+== public static final ==
+// dimensions
+int WIDTH = 320;
+int HEIGHT = 240;
+int SCALE = 2;
+== private ==
+// game thread
+Thread thread;
+boolean running;
+int FPS = 60;
+long targetTime = 1000 / FPS;
+
+// image
+BufferedImage image;
+Graphics2D g;
+
+// game state manager
+GameStateManager gsm;
+}
+GameStateManager <-- GamePanel: composite <
+@enduml
