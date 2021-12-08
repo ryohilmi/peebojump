@@ -5,22 +5,22 @@ public class StateManager {
     private State[] gameStates;
     private int currentState;
 
-    public enum StateType {
-        MENUSTATE,
-    }
+    public static final int NUMGAMESTATES = 2;
+    public static final int MENUSTATE = 0;
+    public static final int LEVEL1STATE = 1;
 
     public StateManager() {
-        gameStates = new State[StateType.values().length];
 
-        currentState = -1;
+        gameStates = new State[NUMGAMESTATES];
+
+        currentState = MENUSTATE;
         loadState(currentState);
+
     }
 
     private void loadState(int state) {
-        if (state == StateType.MENUSTATE.ordinal()) {
-            //TODO : add menu state
-        }
-
+        if(state == MENUSTATE)
+            gameStates[state] = new MenuState(this);
     }
 
     private void unloadState(int state) {
@@ -31,15 +31,23 @@ public class StateManager {
         unloadState(currentState);
         currentState = state;
         loadState(currentState);
+        //gameStates[currentState].init();
     }
 
     public void update() {
-        gameStates[currentState].update();
+        try {
+            gameStates[currentState].update();
+        } catch(Exception e) {
+            e.printStackTrace();
+        }
     }
 
     public void draw(java.awt.Graphics2D g) {
-        gameStates[currentState].draw(g);
-
+        try {
+            gameStates[currentState].draw(g);
+        } catch(Exception e) {
+            e.printStackTrace();
+        }
     }
 
     public void keyPressed(int k) {
