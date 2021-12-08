@@ -1,0 +1,23 @@
+@startuml
+class GameStateManager {
+// new GameState
+// loadState(currentState)
+- constructor()
+==
++ loadState(int state): void
++ unloadState(int state):void
++ update(): void
++ draw(): void
++ keyPressed(int key): void
++ keyReleased(int key): void
+== private ==
+GameState[] gs
+int currentState
+== public static final ==
+int NUMGAMESTATES = 2
+int MENUSTATE = 0
+int LEVEL1STATE = 1
+}
+abstract class GameState
+GameState <-- GameStateManager  : composite <
+@enduml
