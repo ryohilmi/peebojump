@@ -87,11 +87,11 @@ public class MenuState extends State {
         }
 
         if (k == KeyEvent.VK_UP) {
-            currentChoice = currentChoice == -1 ? options.length - 1 : currentChoice - 1;
+            currentChoice = currentChoice - 1 == -1 ? options.length - 1 : currentChoice - 1;
         }
 
         if (k == KeyEvent.VK_DOWN) {
-            currentChoice = currentChoice == options.length ? 0 : currentChoice + 1;
+            currentChoice = currentChoice + 1 == options.length ? 0 : currentChoice + 1;
         }
     }
 
