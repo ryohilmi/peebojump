@@ -1,0 +1,15 @@
+@startuml
+class HUD {
+// try to read HUD gif and assign image
+// set font
+- constructor(Player p)
+==
++ draw(Graphics2D g): void
+==private==
+Player player;
+
+BufferedImage image;
+Font font;
+}
+Player <-- HUD : composite <
+@enduml
