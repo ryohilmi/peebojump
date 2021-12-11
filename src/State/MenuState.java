@@ -1,12 +1,12 @@
 package State;
 
+import Main.GamePanel;
+import TileMap.*;
+import Utility.*;
 import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.io.File;
-
-import Main.GamePanel;
-import TileMap.Background;
-import Utility.Utility;
+import java.util.Objects;
 
 public class MenuState extends State {
 
@@ -32,8 +32,8 @@ public class MenuState extends State {
             bg = new Background("/Backgrounds/background.png");
             bg.setVector(-0.3, 0);
 
-            Font zero4b = Font.createFont(Font.TRUETYPE_FONT, new File(getClass().getResource("/Font/04b.TTF").getPath()));
-            Font minecraft = Font.createFont(Font.TRUETYPE_FONT, new File(getClass().getResource("/Font/Minecraft.TTF").getPath()));
+            Font zero4b = Font.createFont(Font.TRUETYPE_FONT, new File(Objects.requireNonNull(getClass().getResource("/Font/04b.TTF")).getPath()));
+            Font minecraft = Font.createFont(Font.TRUETYPE_FONT, new File(Objects.requireNonNull(getClass().getResource("/Font/Minecraft.TTF")).getPath()));
 
             GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
             ge.registerFont(zero4b);

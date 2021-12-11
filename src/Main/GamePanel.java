@@ -1,12 +1,12 @@
 package Main;
 
+import State.*;
+
+import javax.swing.*;
 import java.awt.*;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.awt.image.BufferedImage;
-import java.awt.event.*;
-
-import javax.swing.JPanel;
-
-import State.StateManager;
 
 public class GamePanel extends JPanel implements Runnable, KeyListener {
 
