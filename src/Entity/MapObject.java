@@ -1,13 +1,13 @@
 package Entity;
 
 import Main.GamePanel;
-import TileMap.*;
+import TileMap.TileMap;
+import TileMap.Tile;
 
-import java.awt.*;
+import java.awt.Rectangle;
 
 public abstract class MapObject {
-
-	protected boolean hitboxFlag = false; // TODO: remove pas production
+	
 	// tile stuff
 	protected TileMap tileMap;
 	protected int tileSize;
@@ -21,12 +21,15 @@ public abstract class MapObject {
 	protected double dy;
 	
 	// dimensions
+	protected static final int CONSTWIDTH = 32;
 	protected int width;
 	protected int height;
 	
 	// collision box
 	protected int cwidth;
 	protected int cheight;
+	protected int mincwidth;
+	protected int maxcwidth;
 	
 	// collision
 	protected int currRow;
@@ -35,10 +38,14 @@ public abstract class MapObject {
 	protected double ydest;
 	protected double xtemp;
 	protected double ytemp;
+	protected int xinverse;
 	protected boolean topLeft;
 	protected boolean topRight;
 	protected boolean bottomLeft;
 	protected boolean bottomRight;
+
+	// stretching collision
+	protected boolean stretchDone;
 	
 	// animation
 	protected Animation animation;
@@ -72,10 +79,19 @@ public abstract class MapObject {
 	public boolean intersects(MapObject o) {
 		Rectangle r1 = getRectangle();
 		Rectangle r2 = o.getRectangle();
+		//System.out.println(r1.intersects(r2));
 		return r1.intersects(r2);
 	}
 	
 	public Rectangle getRectangle() {
+		if(facingRight && right) {
+			return new Rectangle((int)(xtemp + xmap), (int)(ytemp + ymap), cwidth, cheight);
+		}
+
+		if(!facingRight && left) {
+			return new Rectangle((int)(xinverse + xtemp + xmap), (int)(ytemp + ymap), cwidth, cheight);
+		}
+
 		return new Rectangle((int)(xtemp + xmap), (int)(ytemp + ymap), cwidth, cheight);
 	}
 	
@@ -105,7 +121,7 @@ public abstract class MapObject {
 		
 		xdest = x + dx;
 		ydest = y + dy;
-
+		
 		xtemp = x;
 		ytemp = y;
 		
@@ -113,7 +129,7 @@ public abstract class MapObject {
 		if(dy < 0) {
 			if(topLeft || topRight) {
 				dy = 0;
-				ytemp = currRow * tileSize + (cheight >> 1);
+				ytemp = currRow * tileSize + cheight / 2;
 			}
 			else {
 				ytemp += dy;
@@ -123,7 +139,7 @@ public abstract class MapObject {
 			if(bottomLeft || bottomRight) {
 				dy = 0;
 				falling = false;
-				ytemp = (currRow + 1) * tileSize - (cheight >> 1);
+				ytemp = (currRow + 1) * tileSize - cheight / 2;
 			}
 			else {
 				ytemp += dy;
@@ -134,7 +150,7 @@ public abstract class MapObject {
 		if(dx < 0) {
 			if(topLeft || bottomLeft) {
 				dx = 0;
-				xtemp = currCol * tileSize + (cwidth >> 1);
+				xtemp = currCol * tileSize + cwidth / 2;
 			}
 			else {
 				xtemp += dx;
@@ -143,7 +159,7 @@ public abstract class MapObject {
 		if(dx > 0) {
 			if(topRight || bottomRight) {
 				dx = 0;
-				xtemp = (currCol + 1) * tileSize - (cwidth >> 1);
+				xtemp = (currCol + 1) * tileSize - cwidth / 2;
 			}
 			else {
 				xtemp += dx;
@@ -157,6 +173,27 @@ public abstract class MapObject {
 			}
 		}
 		
+	}
+
+	public void stretchCollision () {
+		if(facingRight && right) {
+			if (cwidth < maxcwidth) cwidth++;
+			else if (cwidth == maxcwidth) {
+				cwidth = mincwidth;
+				stretchDone = true;
+			}
+		}
+		else if(!facingRight && left) {
+			if (cwidth < maxcwidth) {
+				cwidth++;
+				xinverse--;
+			}
+			else if (cwidth == maxcwidth) {
+				cwidth = mincwidth;
+				xinverse = 0;
+				stretchDone = true;
+			}
+		}
 	}
 	
 	public int getx() { return (int)x; }
@@ -194,8 +231,6 @@ public abstract class MapObject {
 	}
 	
 	public void draw(java.awt.Graphics2D g) {
-		// TODO: remove buat production
-		if (hitboxFlag) g.drawRect((int)(xtemp + xmap), (int)(ytemp + ymap), cwidth, cheight);
 		if(facingRight) {
 			g.drawImage(
 				animation.getImage(),
@@ -214,6 +249,9 @@ public abstract class MapObject {
 				null
 			);
 		}
+		if(facingRight && right) { g.drawRect((int)(xtemp + xmap), (int)(ytemp + ymap), cwidth, cheight); }
+		if(!facingRight && left) { g.drawRect((int)(xinverse + xtemp + xmap), (int)(ytemp + ymap), cwidth, cheight); }
+
 	}
 	
 }
