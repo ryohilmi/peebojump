@@ -94,7 +94,11 @@ public class Lightning extends MapObject {
 		setMapPosition();
 		super.draw(g);
 	}
-	
+
+	// TODO: implement ini setelah class Level udh ada
+	public void showHitbox(boolean flag) {
+		hitboxFlag = flag;
+	}
 }
 
 
