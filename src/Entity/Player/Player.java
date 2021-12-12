@@ -25,11 +25,11 @@ public class Player extends MapObject {
     private boolean flinching;
     private long flinchTimer;
 
-    // fireball
+    // lightning properties
     private boolean firing;
     private final int fireCost;
-    private final int fireBallDamage;
-    private final ArrayList<Lightning> fireBalls;
+    private final int lightningDmg;
+    private final ArrayList<Lightning> lightnings;
 
     // scratch
     private boolean scratching;
@@ -91,8 +91,8 @@ public class Player extends MapObject {
         fire = maxFire = 2500;
 
         fireCost = 200;
-        fireBallDamage = 5;
-        fireBalls = new ArrayList<>();
+        lightningDmg = 5;
+        lightnings = new ArrayList<>();
 
         scratchDamage = 8;
         scratchRange = 40;
@@ -234,9 +234,9 @@ public class Player extends MapObject {
             }
 
             // cek bila range atk kena
-            for (Lightning lightning : fireBalls) {
+            for (Lightning lightning : lightnings) {
                 if (lightning.intersects(e)) {
-                    e.hit(fireBallDamage);
+                    e.hit(lightningDmg);
                     lightning.setHit();
                     break;
                 }
@@ -330,17 +330,17 @@ public class Player extends MapObject {
         if (firing && currentAction != LIGHTNING) {
             if (fire > fireCost) {
                 fire -= fireCost;
-                Lightning fb = new Lightning(tileMap, facingRight);
-                fb.setPosition(x, y - 10);
-                fireBalls.add(fb);
+                Lightning lightning = new Lightning(tileMap, facingRight);
+                lightning.setPosition(x, y - 10);
+                lightnings.add(lightning);
             }
         }
 
         // update lightning
-        for (int i = 0; i < fireBalls.size(); i++) {
-            fireBalls.get(i).update();
-            if (fireBalls.get(i).shouldRemove()) {
-                fireBalls.remove(i);
+        for (int i = 0; i < lightnings.size(); i++) {
+            lightnings.get(i).update();
+            if (lightnings.get(i).shouldRemove()) {
+                lightnings.remove(i);
                 i--;
             }
         }
@@ -412,8 +412,8 @@ public class Player extends MapObject {
         setMapPosition();
 
         // draw lightning
-        for (Lightning fireBall : fireBalls) {
-            fireBall.draw(g);
+        for (Lightning lightning : lightnings) {
+            lightning.draw(g);
         }
 
         // draw player

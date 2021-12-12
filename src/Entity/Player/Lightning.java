@@ -30,7 +30,6 @@ public class Lightning extends MapObject {
 		height = 64;
 		cwidth = 30;
 		cheight = 20;
-		System.out.println(xtemp);
 		// load sprites
 		try {
 			BufferedImage spritesheet = ImageIO.read(
