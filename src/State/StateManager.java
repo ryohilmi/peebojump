@@ -21,6 +21,8 @@ public class StateManager {
     private void loadState(int state) {
         if(state == MENUSTATE)
             gameStates[state] = new MenuState(this);
+        if(state == LEVEL1STATE)
+            gameStates[state] = new Level1State(this);
     }
 
     private void unloadState(int state) {
@@ -36,6 +38,7 @@ public class StateManager {
 
     public void update() {
         try {
+            if(gameStates[currentState] != null)
             gameStates[currentState].update();
         } catch(Exception e) {
             e.printStackTrace();
@@ -44,6 +47,7 @@ public class StateManager {
 
     public void draw(java.awt.Graphics2D g) {
         try {
+            if(gameStates[currentState] != null)
             gameStates[currentState].draw(g);
         } catch(Exception e) {
             e.printStackTrace();
