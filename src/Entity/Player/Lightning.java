@@ -34,7 +34,7 @@ public class Lightning extends MapObject {
 		try {
 			BufferedImage spritesheet = ImageIO.read(
 					Objects.requireNonNull(getClass().getResourceAsStream(
-							"/Sprites/Player/lightning.gif"
+							"/Sprites/Player/lightning.png"
 					))
 			);
 
