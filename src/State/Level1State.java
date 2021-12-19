@@ -35,7 +35,7 @@ public class Level1State extends State {
         bg = new Background("/Backgrounds/background.png");
 
         player = new Player(tileMap);
-        player.setPosition(25, 0);
+        player.setPosition(50, 0);
 
         populateEnemies();
 
