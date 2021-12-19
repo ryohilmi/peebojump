@@ -1,4 +1,4 @@
-package Entity.Player;
+package Entity.PlayerObject;
 
 import Entity.Animation;
 import Entity.MapObject;
