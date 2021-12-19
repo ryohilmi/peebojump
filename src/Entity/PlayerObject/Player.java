@@ -1,11 +1,9 @@
-package Entity.Player;
+package Entity.PlayerObject;
 
 import Audio.AudioPlayer;
-import Entity.Animation;
-import Entity.Enemy.Enemy;
-import Entity.MapObject;
 import TileMap.*;
-
+import Entity.*;
+import Entity.Enemies.*;
 import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.image.BufferedImage;
@@ -261,7 +259,6 @@ public class Player extends MapObject {
     }
 
     private void getNextPosition() {
-
         // movement
         if (left) {
             dx -= moveSpeed;
