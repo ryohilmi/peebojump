@@ -90,7 +90,7 @@ public class Player extends MapObject {
         health = maxHealth = 5;
         fire = maxFire = 2500;
 
-        fireCost = 200;
+        fireCost = 1000;
         lightningDmg = 5;
         lightnings = new ArrayList<>();
 
@@ -105,48 +105,39 @@ public class Player extends MapObject {
                     ))
             );
 
-            sprites = new ArrayList<BufferedImage[]>();
+            sprites = new ArrayList<>();
             for(int i = 0; i < 5; i++) {
 
                 BufferedImage[] bi =
                         new BufferedImage[numFrames[i]];
 
                 for(int j = 0; j < numFrames[i]; j++) {
-
-                    if(i == IDLE) {
-                        bi[j] = spritesheet.getSubimage(
+                    switch (i) {
+                        case IDLE -> bi[j] = spritesheet.getSubimage(
                                 0,
                                 0,
                                 IDLE_W,
                                 IDLE_H
                         );
-                    }
-                    else if (i == WALKING) {
-                        bi[j] = spritesheet.getSubimage(
+                        case WALKING -> bi[j] = spritesheet.getSubimage(
                                 j * WALKING_W,
                                 IDLE_H,
                                 WALKING_W,
                                 WALKING_H
                         );
-                    }
-                    else if (i == JUMPING) {
-                        bi[j] = spritesheet.getSubimage(
+                        case JUMPING -> bi[j] = spritesheet.getSubimage(
                                 j * JUMPING_W,
                                 IDLE_H + WALKING_H,
                                 JUMPING_W,
                                 JUMPING_H
                         );
-                    }
-                    else if (i == SCRATCHING) {
-                        bi[j] = spritesheet.getSubimage(
+                        case SCRATCHING -> bi[j] = spritesheet.getSubimage(
                                 j * SCRATCHING_W,
                                 IDLE_H + WALKING_H + JUMPING_H,
                                 SCRATCHING_W,
                                 SCRATCHING_H
                         );
-                    }
-                    else if (i == LIGHTNING) {
-                        bi[j] = spritesheet.getSubimage(
+                        case LIGHTNING -> bi[j] = spritesheet.getSubimage(
                                 j * LIGHTNING_W,
                                 IDLE_H + WALKING_H + JUMPING_H + SCRATCHING_H,
                                 LIGHTNING_W,
