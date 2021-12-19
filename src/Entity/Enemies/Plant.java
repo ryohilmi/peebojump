@@ -38,10 +38,15 @@ public class Plant extends Enemy {
         maxcwidth = 80;
         cwidth = mincwidth;
         cheight = 40;
+        stretchSpeed = 1;
 
         // attack
         attackDelay = 150;
         attackCounter = 0;
+        attackAnimDelay = 100;
+
+        // idle
+        idleAnimDelay = 110;
 
         // health
         health = maxHealth = 2;
@@ -93,7 +98,7 @@ public class Plant extends Enemy {
         idle = true;
         currentAction = IDLE;
         animation.setFrames(sprites.get(IDLE));
-        animation.setDelay(110);
+        animation.setDelay(idleAnimDelay);
 
         left = true;
         facingRight = false;
@@ -117,7 +122,8 @@ public class Plant extends Enemy {
         // return attack
         if(currentAction == ATTACK) {
             if(animation.hasPlayedOnce()) {
-                attack = false;
+                if(attackRight) { attackRight = false; }
+                else if(attackLeft) { attackLeft = false; }
                 stretchDone = false;
             }
         }
@@ -132,12 +138,26 @@ public class Plant extends Enemy {
         }
 
         // check attack
-        else if(attack) {
+        else if(attackRight) {
             if(currentAction != ATTACK) {
+                right = true;
+                facingRight = true;
                 currentAction = ATTACK;
                 width = attackWidth;
                 animation.setFrames(sprites.get(ATTACK));
-                animation.setDelay(100);
+                animation.setDelay(attackAnimDelay);
+            }
+            if(!stretchDone) stretchCollision();
+        }
+
+        else if(attackLeft) {
+            if(currentAction != ATTACK) {
+                left = true;
+                facingRight = false;
+                currentAction = ATTACK;
+                width = attackWidth;
+                animation.setFrames(sprites.get(ATTACK));
+                animation.setDelay(attackAnimDelay);
             }
             if(!stretchDone) stretchCollision();
         }
@@ -148,7 +168,7 @@ public class Plant extends Enemy {
                 currentAction = IDLE;
                 width = idleWidth;
                 animation.setFrames(sprites.get(IDLE));
-                animation.setDelay(400);
+                animation.setDelay(idleAnimDelay);
             }
         }
 
