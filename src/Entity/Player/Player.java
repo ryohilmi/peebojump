@@ -99,66 +99,60 @@ public class Player extends MapObject {
 
         // load sprites
         try {
-            sprites = new ArrayList<>();
-            for (int i = 0; i < 5; i++) {
+            BufferedImage spritesheet = ImageIO.read(
+                    Objects.requireNonNull(getClass().getResourceAsStream(
+                            "/Sprites/Player/peebo.png"
+                    ))
+            );
 
-                BufferedImage[] bi = new BufferedImage[numFrames[i]];
-                BufferedImage sprite;
-                int w, h;
+            sprites = new ArrayList<BufferedImage[]>();
+            for(int i = 0; i < 5; i++) {
 
-                // gatau bakal performance issue ato kgk kalo read satu2
-                // tapi biar lebih jelas aja ngambil sprite yang mana
-                switch (i) {
-                    case IDLE -> {
-                        sprite = ImageIO.read(
-                                Objects.requireNonNull(getClass().getResourceAsStream(
-                                        "/Sprites/Player/peebo_idle.png"
-                                ))
-                        );
-                        w = width;
-                        h = height;
-                    }
-                    case JUMPING -> {
-                        sprite = ImageIO.read(
-                                Objects.requireNonNull(getClass().getResourceAsStream(
-                                        "/Sprites/Player/peebo_jump.png"
-                                ))
-                        );
-                        w = JUMPING_W;
-                        h = JUMPING_H;
-                    }
-                    case WALKING -> {
-                        sprite = ImageIO.read(
-                                Objects.requireNonNull(getClass().getResourceAsStream(
-                                        "/Sprites/Player/peebo_walk.png"
-                                ))
-                        );
-                        w = WALKING_W;
-                        h = WALKING_H;
-                    }
-                    case SCRATCHING -> {
-                        sprite = ImageIO.read(
-                                Objects.requireNonNull(getClass().getResourceAsStream(
-                                        "/Sprites/Player/peebo_melee.png"
-                                ))
-                        );
-                        h = SCRATCHING_H;
-                        w = SCRATCHING_W;
-                    }
-                    case LIGHTNING -> {
-                        sprite = ImageIO.read(
-                                Objects.requireNonNull(getClass().getResourceAsStream(
-                                        "/Sprites/Player/peebo_range.png"
-                                ))
-                        );
-                        h = LIGHTNING_H;
-                        w = LIGHTNING_W;
-                    }
-                    default -> throw new IllegalStateException("Unexpected enum action " + i);
-                }
+                BufferedImage[] bi =
+                        new BufferedImage[numFrames[i]];
 
-                for (int j = 0; j < numFrames[i]; j++) {
-                    bi[j] = sprite.getSubimage(j * w, 0, w, h);
+                for(int j = 0; j < numFrames[i]; j++) {
+
+                    if(i == IDLE) {
+                        bi[j] = spritesheet.getSubimage(
+                                0,
+                                0,
+                                IDLE_W,
+                                IDLE_H
+                        );
+                    }
+                    else if (i == WALKING) {
+                        bi[j] = spritesheet.getSubimage(
+                                j * WALKING_W,
+                                IDLE_H,
+                                WALKING_W,
+                                WALKING_H
+                        );
+                    }
+                    else if (i == JUMPING) {
+                        bi[j] = spritesheet.getSubimage(
+                                j * JUMPING_W,
+                                IDLE_H + WALKING_H,
+                                JUMPING_W,
+                                JUMPING_H
+                        );
+                    }
+                    else if (i == SCRATCHING) {
+                        bi[j] = spritesheet.getSubimage(
+                                j * SCRATCHING_W,
+                                IDLE_H + WALKING_H + JUMPING_H,
+                                SCRATCHING_W,
+                                SCRATCHING_H
+                        );
+                    }
+                    else if (i == LIGHTNING) {
+                        bi[j] = spritesheet.getSubimage(
+                                j * LIGHTNING_W,
+                                IDLE_H + WALKING_H + JUMPING_H + SCRATCHING_H,
+                                LIGHTNING_W,
+                                LIGHTNING_H
+                        );
+                    }
                 }
 
                 sprites.add(bi);
