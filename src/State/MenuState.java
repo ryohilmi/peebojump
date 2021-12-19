@@ -43,7 +43,7 @@ public class MenuState extends State {
             titleFont = new Font(
                     "04b",
                     Font.PLAIN,
-                    60);
+                    50);
 
             font = new Font("Minecraft", Font.PLAIN, 34);
 
@@ -63,21 +63,21 @@ public class MenuState extends State {
 
         bg.draw(g);
 
-        Utility.horizontalCenteredText(g, "PeeboJump", GamePanel.WIDTH, 153, titleFont, Color.black);
+        Utility.horizontalCenteredText(g, "PeeboJump", GamePanel.WIDTH, 100, titleFont, Color.black);
 
-        Utility.horizontalCenteredText(g, "PeeboJump", GamePanel.WIDTH, 150, titleFont, titleColor);
+        Utility.horizontalCenteredText(g, "PeeboJump", GamePanel.WIDTH, 103, titleFont, titleColor);
 
         g.setFont(font);
         for (int i = 0; i < options.length; i++) {
             if (i == currentChoice) {
                 g.setColor(Color.WHITE);
-                g.setFont(g.getFont().deriveFont(38.0f));
+                g.setFont(g.getFont().deriveFont(28.0f));
             } else {
                 g.setColor(new Color(239, 71, 111));
-                g.setFont(g.getFont().deriveFont(34.0f));
+                g.setFont(g.getFont().deriveFont(24.0f));
             }
 
-            Utility.horizontalCenteredText(g, options[i], GamePanel.WIDTH, 250 + i * 50, g.getFont(), g.getColor());
+            Utility.horizontalCenteredText(g, options[i], GamePanel.WIDTH, 150 + i * 50, g.getFont(), g.getColor());
         }
     }
 
