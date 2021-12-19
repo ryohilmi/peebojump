@@ -2,9 +2,10 @@ package TileMap;
 
 import Main.GamePanel;
 
-import java.awt.*;
-import java.awt.image.*;
 import javax.imageio.ImageIO;
+import java.awt.*;
+import java.awt.image.BufferedImage;
+import java.util.Objects;
 
 public class Background {
 
@@ -19,7 +20,7 @@ public class Background {
 
         try {
             image = ImageIO.read(
-                    getClass().getResourceAsStream(s)
+                    Objects.requireNonNull(getClass().getResourceAsStream(s))
             );
         }
         catch(Exception e) {
