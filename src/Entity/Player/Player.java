@@ -317,6 +317,7 @@ public class Player extends MapObject {
                 fire -= fireCost;
                 Lightning lightning = new Lightning(tileMap, facingRight);
                 lightning.setPosition(x, y - 10);
+                lightning.setRectModifier(-15, -10);
                 lightnings.add(lightning);
             }
         }
@@ -328,6 +329,7 @@ public class Player extends MapObject {
                 lightnings.remove(i);
                 i--;
             }
+            lightnings.get(i).showHitbox(hitboxFlag);
         }
 
         // cek kedap kedip

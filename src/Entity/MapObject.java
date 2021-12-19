@@ -63,10 +63,17 @@ public abstract class MapObject {
 	protected double jumpStart;
 	protected double stopJumpSpeed;
 
+	protected int modify_rectangle_x = 0;
+	protected int modify_rectangle_y = 0;
+
 	// constructor
 	public MapObject(TileMap tm) {
 		tileMap = tm;
 		tileSize = tm.getTileSize(); 
+	}
+	public void setRectModifier(int x, int y) {
+		modify_rectangle_x = x;
+		modify_rectangle_y = y;
 	}
 	
 	public boolean intersects(MapObject o) {
@@ -76,7 +83,7 @@ public abstract class MapObject {
 	}
 	
 	public Rectangle getRectangle() {
-		return new Rectangle((int)(xtemp + xmap) - 15, (int)(ytemp + ymap) - 10, cwidth, cheight);
+		return new Rectangle((int)(xtemp + xmap) - (15 + modify_rectangle_x), (int)(ytemp + ymap) - (10 + modify_rectangle_y), cwidth, cheight);
 	}
 	
 	public void calculateCorners(double x, double y) {
@@ -195,7 +202,7 @@ public abstract class MapObject {
 	
 	public void draw(java.awt.Graphics2D g) {
 		// TODO: remove buat production
-		if (hitboxFlag) g.drawRect((int)(xtemp + xmap) - 15, (int)(ytemp + ymap) - 10, cwidth, cheight);
+		if (hitboxFlag) g.drawRect((int)(xtemp + xmap) - (15 + modify_rectangle_x), (int)(ytemp + ymap) - (10 + modify_rectangle_y), cwidth, cheight);
 		if(facingRight) {
 			g.drawImage(
 				animation.getImage(),
