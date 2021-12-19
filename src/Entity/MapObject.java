@@ -76,7 +76,7 @@ public abstract class MapObject {
 	}
 	
 	public Rectangle getRectangle() {
-		return new Rectangle((int)(xtemp + xmap), (int)(ytemp + ymap), cwidth, cheight);
+		return new Rectangle((int)(xtemp + xmap) - 15, (int)(ytemp + ymap) - 10, cwidth, cheight);
 	}
 	
 	public void calculateCorners(double x, double y) {
@@ -195,7 +195,7 @@ public abstract class MapObject {
 	
 	public void draw(java.awt.Graphics2D g) {
 		// TODO: remove buat production
-		if (hitboxFlag) g.drawRect((int)(xtemp + xmap), (int)(ytemp + ymap), cwidth, cheight);
+		if (hitboxFlag) g.drawRect((int)(xtemp + xmap) - 15, (int)(ytemp + ymap) - 10, cwidth, cheight);
 		if(facingRight) {
 			g.drawImage(
 				animation.getImage(),
