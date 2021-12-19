@@ -1,8 +1,8 @@
-package Entity.Player;
+package Entity.PlayerObject;
 
 import Audio.AudioPlayer;
 import Entity.Animation;
-import Entity.Enemy.Enemy;
+import Entity.Enemies.Enemy;
 import Entity.MapObject;
 import TileMap.*;
 
