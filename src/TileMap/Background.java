@@ -43,11 +43,11 @@ public class Background {
         x += dx;
         y += dy;
 
-        if (Math.abs(x) == GamePanel.WIDTH) {
+        if (Math.abs(x) >= GamePanel.WIDTH) {
             x = 0;
         }
 
-        if (Math.abs(y) == GamePanel.HEIGHT) {
+        if (Math.abs(y) >= GamePanel.HEIGHT) {
             y = 0;
         }
     }
