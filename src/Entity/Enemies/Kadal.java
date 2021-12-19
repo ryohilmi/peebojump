@@ -1,8 +1,7 @@
 package Entity.Enemies;
 
 import Entity.Animation;
-import Entity.Enemy;
-import Entity.Player;
+import Entity.Enemies.Enemy;
 import TileMap.TileMap;
 
 import javax.imageio.ImageIO;
@@ -15,7 +14,7 @@ public class Kadal extends Enemy {
     // sprites
     private ArrayList<BufferedImage[]> sprites;
     private final int[] numFrames = {
-            2, 11, 9
+            2, 9, 9
     };
 
     public Kadal(TileMap tm) {
@@ -33,23 +32,31 @@ public class Kadal extends Enemy {
         // size
         width = CONSTWIDTH;
         height = 48;
-        attackWidth = 340;
+        attackWidth = CONSTWIDTH * 9;
         idleWidth = width;
         walkWidth = width;
 
         // collision size
         mincwidth = 20;
-        maxcwidth = 80;
+        maxcwidth = 154;
         cwidth = mincwidth;
         cheight = 36;
+        stretchSpeed = 3;
 
         // attack
         attackDelay = 150;
         attackCounter = 0;
+        attackAnimDelay = 100;
 
         // idle
         idleTime = 200;
         idleCounter = 0;
+        idleAnimDelay = 150;
+
+        // walk
+        walkAnimDelay = 50;
+        walkCounter = 0;
+        walkMaxDistance = 100;
 
         // health
         health = maxHealth = 2;
@@ -101,7 +108,7 @@ public class Kadal extends Enemy {
         walk = true;
         currentAction = WALK;
         animation.setFrames(sprites.get(WALK));
-        animation.setDelay(110);
+        animation.setDelay(walkAnimDelay);
 
         left = true;
         facingRight = false;
@@ -126,6 +133,12 @@ public class Kadal extends Enemy {
         if(currentAction == ATTACK) {
             dx = 0;
         }
+
+        // cannot walk when idle
+        if(currentAction == IDLE) {
+            dx = 0;
+        }
+
         // falling
         if (falling) {
             dy += fallSpeed;
@@ -140,26 +153,18 @@ public class Kadal extends Enemy {
         setPosition(xtemp, ytemp);
 
         // return attack
-        if(currentAction == ATTACK) {
+        if((currentAction == ATTACK)) {
             if(animation.hasPlayedOnce()) {
+                // return to the previous action
                 if(previousAction == IDLE) { idle = true; }
                 else if(previousAction == WALK) { walk = true; }
-                attack = false;
+                // make attack false
+                if(attackRight) { attackRight = false; }
+                else if(attackLeft) { attackLeft = false; }
                 stretchDone = false;
-            }
-        }
 
-        // check wall
-        if ((right && dx == 0) || (left && dx == 0)) {
-            if(!idle) {
-                idle = true;
-                walk = false;
-            }
-            if(idle) {
-                idleBuffer();
-                if(!idle) {
-                    walk = true;
-                }
+                // stretch fault
+                cwidth = mincwidth;
             }
         }
 
@@ -173,49 +178,63 @@ public class Kadal extends Enemy {
         }
 
         // check attack
-        //else if(attack) {
-        //    if(currentAction != ATTACK) {
-        //        previousAction = currentAction;
-        //        currentAction = ATTACK;
-        //        width = attackWidth;
-        //        animation.setFrames(sprites.get(ATTACK));
-        //        animation.setDelay(500);
-        //    }
-        //    if(!stretchDone) stretchCollision();
-        //}
+        if((attackRight && right && facingRight) || (attackLeft && left && !facingRight)) {
+            if (currentAction != ATTACK) {
+                // action transition
+                previousAction = currentAction;
+                if(previousAction == IDLE) { idle = false; }
+                else if(previousAction == WALK) { walk = false; }
+
+                // set currentAction ATTACK
+                currentAction = ATTACK;
+                width = attackWidth;
+                animation.setFrames(sprites.get(ATTACK));
+                animation.setDelay(attackAnimDelay);
+            }
+            if (!stretchDone) stretchCollision();
+        }
 
         // check walk
-        else if(walk) {
-            if(currentAction != WALK) {
-                currentAction = WALK;
-                width = walkWidth;
-                animation.setFrames(sprites.get(WALK));
-                animation.setDelay(100);
+        if(walk) {
+            if(walkCounter < walkMaxDistance) {
+                idle = false;
+                if (currentAction != WALK) {
+                    currentAction = WALK;
+                    width = walkWidth;
+                    animation.setFrames(sprites.get(WALK));
+                    animation.setDelay(walkAnimDelay);
+                }
+                walkCounter++;
+            }
+            else if(walkCounter == walkMaxDistance) {
+                walk = false;
+                idle = true;
+                walkCounter = 0;
+
             }
         }
 
         // check idle
-        else if(idle){
+        if(idle){
+            walk = false;
             if(currentAction != IDLE) {
                 currentAction = IDLE;
                 width = idleWidth;
                 animation.setFrames(sprites.get(IDLE));
-                animation.setDelay(400);
+                animation.setDelay(idleAnimDelay);
             }
+            idleBuffer();
         }
 
         // update animation
         animation.update();
 
-        //System.out.println("x = " + x);
-        //System.out.println("xinverse = " + xinverse);
-
+        //System.out.println("walk = " + walk);
+        //System.out.println("idle = " + idle);
 
     }
 
     public void draw (Graphics2D g){
-
-        //if(notOnScreen()) return;
 
         setMapPosition();
 
