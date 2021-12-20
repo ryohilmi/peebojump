@@ -31,7 +31,7 @@ public class StateManager {
     }
 
     public void setState(int state) {
-        previousState = state;
+        previousState = currentState;
         unloadState(currentState);
         currentState = state;
         loadState(currentState);
