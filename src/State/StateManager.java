@@ -8,9 +8,10 @@ public class StateManager {
     private int currentState;
     private int previousState;
 
-    public static final int NUMGAMESTATES = 2;
+    public static final int NUMGAMESTATES = 3;
     public static final int MENUSTATE = 0;
-    public static final int LEVEL1STATE = 1;
+    public static final int DEATHSTATE = 1;
+    public static final int LEVEL1STATE = 2;
 
     public StateManager() {
 
@@ -24,6 +25,9 @@ public class StateManager {
     private void loadState(int state) {
         if(state == MENUSTATE) {
             gameStates[state] = new MenuState(this);
+        }
+        if(state == DEATHSTATE) {
+            gameStates[state] = new DeathState(this);
         }
         if(state == LEVEL1STATE) {
             gameStates[state] = new Level1State(this);
