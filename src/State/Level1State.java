@@ -6,6 +6,7 @@ import Entity.PlayerObject.*;
 import Entity.Balloon;
 import Main.GamePanel;
 import TileMap.*;
+import Utility.SaveData;
 import Utility.Time;
 
 import java.awt.*;
@@ -136,7 +137,7 @@ public class Level1State extends State {
         // update balloon
         balloon.update();
         if(player.intersects(balloon)) {
-            // TODO: write high score
+            SaveData.writeHighScore(1, String.valueOf(time.getSecond())+"."+String.valueOf(time.getMilisecond()));
             stateManager.setState(StateManager.LEVEL2STATE);
         }
         tileMap.setPosition(
