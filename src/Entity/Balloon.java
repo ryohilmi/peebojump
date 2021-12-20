@@ -13,6 +13,7 @@ public class Balloon extends MapObject {
 
     public Balloon(TileMap tm) {
         super(tm);
+        facingRight = true;
         width = 32;
         height = 64;
         cwidth = 22;

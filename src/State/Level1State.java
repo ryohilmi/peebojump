@@ -3,8 +3,7 @@ package State;
 import Entity.Balloon;
 import Entity.Player.Player;
 import Main.GamePanel;
-import TileMap.Background;
-import TileMap.TileMap;
+import TileMap.*;
 
 import java.awt.*;
 import java.awt.event.KeyEvent;
@@ -45,7 +44,7 @@ public class Level1State extends State {
         populateEnemies();
 
         balloon = new Balloon(tileMap);
-        balloon.setPosition(100, 200);
+        balloon.setPosition(100, 190);
     }
 
     private void populateEnemies() {
@@ -61,6 +60,7 @@ public class Level1State extends State {
         balloon.update();
         if(player.intersects(balloon)) {
             // TODO: game end
+            player.hit(100);
         }
         tileMap.setPosition(
                 (GamePanel.WIDTH >> 1) - player.getx(),
