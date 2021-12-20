@@ -110,32 +110,39 @@ public class Player extends MapObject {
                         new BufferedImage[numFrames[i]];
 
                 for(int j = 0; j < numFrames[i]; j++) {
-                    switch (i) {
-                        case IDLE -> bi[j] = spritesheet.getSubimage(
+                    if (i == IDLE) {
+                        bi[j] = spritesheet.getSubimage(
                                 0,
                                 0,
                                 IDLE_W,
                                 IDLE_H
                         );
-                        case WALKING -> bi[j] = spritesheet.getSubimage(
+                    }
+                    else if (i == WALKING) {
+                        bi[j] = spritesheet.getSubimage(
                                 j * WALKING_W,
                                 IDLE_H,
                                 WALKING_W,
                                 WALKING_H
                         );
-                        case JUMPING -> bi[j] = spritesheet.getSubimage(
+                    }
+                    else if (i == JUMPING) {
+                        bi[j] = spritesheet.getSubimage(
                                 j * JUMPING_W,
                                 IDLE_H + WALKING_H,
                                 JUMPING_W,
                                 JUMPING_H
                         );
-                        case SCRATCHING -> bi[j] = spritesheet.getSubimage(
+                    }
+                    else if (i == SCRATCHING) {
+                        bi[j] = spritesheet.getSubimage(
                                 j * SCRATCHING_W,
                                 IDLE_H + WALKING_H + JUMPING_H,
                                 SCRATCHING_W,
                                 SCRATCHING_H
                         );
-                        case LIGHTNING -> bi[j] = spritesheet.getSubimage(
+                    }
+                    else if (i == LIGHTNING) { bi[j] = spritesheet.getSubimage(
                                 j * LIGHTNING_W,
                                 IDLE_H + WALKING_H + JUMPING_H + SCRATCHING_H,
                                 LIGHTNING_W,
