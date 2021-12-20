@@ -121,6 +121,9 @@ public class MenuState extends State {
 
             stateManager.setState(currentLevel);
         }
+        if (currentChoice == 2) {
+            stateManager.setState(StateManager.HIGHSCORESTATE);
+        }
         if (currentChoice == 4) {
             System.exit(0);
         }
