@@ -1,6 +1,7 @@
 package State;
 
-import Entity.HUD;
+import Entity.*;
+import Entity.Enemies.*;
 import Entity.PlayerObject.*;
 import Entity.Balloon;
 import Main.GamePanel;
@@ -8,11 +9,14 @@ import TileMap.*;
 
 import java.awt.*;
 import java.awt.event.KeyEvent;
+import java.util.ArrayList;
 
 public class Level1State extends State {
     private TileMap tileMap;
     private Background bg;
     private HUD hud;
+
+    private ArrayList<Enemy> enemies;
 
     private Player player;
     private Balloon balloon;
@@ -27,32 +31,67 @@ public class Level1State extends State {
 
     public void init() {
         tileMap = new TileMap(32);
-        tileMap.loadTiles("/Tilesets/tile.png");
-        tileMap.loadMap("/Maps/temp.map");
+        tileMap.loadTiles("/Tilesets/tilepeebo.png");
+        tileMap.loadMap("/Maps/better1.map");
         tileMap.setPosition(0, 0);
         tileMap.setTween(1);
-
-		/* tileMap = new TileMap(30);
-		tileMap.loadTiles("/Tilesets/grasstileset.gif");
-		tileMap.loadMap("/Maps/level1-1.map");
-		tileMap.setPosition(0, 0);
-		tileMap.setTween(1); */
 
         bg = new Background("/Backgrounds/background.png");
 
         player = new Player(tileMap);
-        player.setPosition(50, 0);
+        player.setPosition(900, 2525);
 
         hud = new HUD(player);
 
         populateEnemies();
 
         balloon = new Balloon(tileMap);
-        balloon.setPosition(100, 190);
+        balloon.setPosition(3104, 160);
     }
 
     private void populateEnemies() {
+        enemies = new ArrayList<Enemy>();
 
+        // enemy spawn
+        Landak l;
+        Kadal k;
+        Plant p;
+
+        Point[] LandakPoint = new Point[] {
+                new Point(2432, 2528),
+                new Point(2816, 1664),
+                new Point(2176, 1888)
+        };
+        for(int i = 0; i < LandakPoint.length; i++) {
+            l = new Landak(tileMap);
+            l.setPosition(LandakPoint[i].x, LandakPoint[i].y);
+            enemies.add(l);
+        }
+
+        Point[] KadalPoint = new Point[]{
+                new Point(1696, 1952),
+                new Point(1312, 1856),
+                new Point(704, 1856)
+        };
+
+        for (int i = 0; i < KadalPoint.length; i++)
+        {
+            k = new Kadal(tileMap);
+            k.setPosition(KadalPoint[i].x, KadalPoint[i].y);
+            enemies.add(k);
+        }
+
+        Point[] PlantPoint = new Point[]{
+                new Point(1376, 1088),
+                new Point(2528, 768)
+        };
+
+        for (int i = 0; i < PlantPoint.length; i++)
+        {
+            p = new Plant(tileMap);
+            p.setPosition(PlantPoint[i].x, PlantPoint[i].y);
+            enemies.add(p);
+        };
     }
 
     public void update() {
