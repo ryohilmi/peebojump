@@ -1,6 +1,6 @@
 package State;
 
-import Entity.Player.Player;
+import Entity.PlayerObject.*;
 import Main.GamePanel;
 import TileMap.Background;
 import TileMap.TileMap;
@@ -21,7 +21,7 @@ public class Level1State extends State {
 
     public void init() {
         tileMap = new TileMap(32);
-        tileMap.loadTiles("/Tile/tile.png");
+        tileMap.loadTiles("/Tilesets/tile.png");
         tileMap.loadMap("/Maps/temp.map");
         tileMap.setPosition(0, 0);
         tileMap.setTween(1);
