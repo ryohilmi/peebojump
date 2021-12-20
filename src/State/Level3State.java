@@ -1,11 +1,15 @@
 package State;
 
-import Entity.*;
-import Entity.Enemies.*;
-import Entity.PlayerObject.*;
 import Entity.Balloon;
+import Entity.Enemies.Enemy;
+import Entity.Enemies.Kadal;
+import Entity.Enemies.Landak;
+import Entity.Enemies.Plant;
+import Entity.HUD;
+import Entity.PlayerObject.Player;
 import Main.GamePanel;
 import TileMap.*;
+import Utility.Time;
 
 import java.awt.*;
 import java.awt.event.KeyEvent;
@@ -22,10 +26,12 @@ public class Level3State extends State {
     private Balloon balloon;
 
     private boolean show_hitbox;
+    private final Time time;
 
     public Level3State(StateManager gsm) {
         this.stateManager = gsm;
         show_hitbox = false;
+        time = new Time();
         init();
     }
 
@@ -38,7 +44,7 @@ public class Level3State extends State {
 
         bg = new Background("/Backgrounds/backgroundlevel.png");
 
-        player = new Player(tileMap);
+        player = new Player(tileMap, time);
         player.setPosition(1600, 3000);
 
         hud = new HUD(player);
@@ -47,6 +53,7 @@ public class Level3State extends State {
 
         balloon = new Balloon(tileMap);
         balloon.setPosition(1600, 160);
+        time.start();
     }
 
     private void populateEnemies() {
