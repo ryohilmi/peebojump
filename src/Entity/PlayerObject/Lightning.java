@@ -7,111 +7,122 @@ import TileMap.*;
 import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.image.BufferedImage;
-import java.util.Objects;
 
 public class Lightning extends MapObject {
 
-	private int expires = -35;
-	private boolean hit;
+	private int positionVault;
+	private boolean hit = false;
 	private boolean remove;
 	private BufferedImage[] sprites;
 
-	public Lightning(TileMap tm, boolean right) {
-		
+	public Lightning(TileMap tm, boolean playerFacingRight) {
+
 		super(tm);
-		
-		facingRight = right;
-		
-		moveSpeed = 2.5;
-		if(right) dx = moveSpeed;
-		else dx = -moveSpeed;
-		
-		width = 80;
+
+		// position
+		positionVault = 100;
+
+		// size
+		width = CONSTWIDTH * 9;
 		height = 64;
-		cwidth = 30;
-		cheight = 20;
-		System.out.println(xtemp);
+
+		// coliision size
+		mincwidth = 10;
+		maxcwidth = CONSTWIDTH * 4 + 12;
+		cwidth = mincwidth;
+		cheight = 36;
+		stretchSpeed = 5;
+		stretchDone = false;
+
+		// direction
+		if(playerFacingRight) {
+			facingRight = true;
+			right = true;
+			left = false;
+			x += positionVault;
+		}
+		else {
+			facingRight = false;
+			right = false;
+			left = true;
+			x -= positionVault;
+		}
+
+
+
 		// load sprites
 		try {
 			BufferedImage spritesheet = ImageIO.read(
-					Objects.requireNonNull(getClass().getResourceAsStream(
-							"/Sprites/Player/lightning.gif"
-					))
+					getClass().getResourceAsStream(
+							"/Sprites/Player/lightning.png"
+					)
 			);
 
-			sprites = new BufferedImage[16];
+			sprites = new BufferedImage[19];
 			for(int i = 0; i < sprites.length; i++) {
-				sprites[i] = spritesheet.getSubimage(
-					i * 100,
-					0,
-					width,
-					height
+				sprites[sprites.length - 1 - i] = spritesheet.getSubimage(
+						i * width,
+						0,
+						width,
+						height
 				);
 			}
 
 			animation = new Animation();
 			animation.setFrames(sprites);
 			animation.setDelay(35);
-			
+
 		}
 		catch(Exception e) {
 			e.printStackTrace();
 		}
-		
+
 	}
-	
-	public void setHit() {
-		if(hit) return;
-		hit = true;
-		dx = 0;
-	}
-	
+
+	public void setHit() { hit = true; }
+
 	public boolean shouldRemove() { return remove; }
-	
+
 	public void update() {
-		
+
+		System.out.println("dx = " + dx);
+
 		checkTileMapCollision();
 		setPosition(xtemp, ytemp);
-		
+		//getNextPosition();
+
+
+		if (!stretchDone) {
+			stretchCollision();
+		}
+
 		if(dx == 0 && !hit) {
 			setHit();
 		}
-		
+
 		animation.update();
 		if (animation.hasPlayedOnce()) {
+			//System.out.println("aih");
 			remove = true;
-		}
-
-		// buat nentuin apakah lightning expired (setelah 35 frame)
-		if( expires == 1 || hit) {
 			dx = 0;
 			cwidth = 0;
 			cheight = 0;
 		}
-		expires++;
+
+		System.out.println("hit = " + hit);
+		System.out.println("dx = " + dx);
+		System.out.println("hasplayed = " + animation.hasPlayedOnce());
+
 	}
-	
+
 	public void draw(Graphics2D g) {
 		setMapPosition();
 		super.draw(g);
 	}
-	
+
+	// TODO: implement ini setelah class Level udh ada
+	public void showHitbox(boolean flag) {
+		hitboxFlag = flag;
+	}
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
