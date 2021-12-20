@@ -335,12 +335,12 @@ public class Player extends MapObject {
 
         // update lightning
         for (int i = 0; i < lightnings.size(); i++) {
+            lightnings.get(i).showHitbox(hitboxFlag);
             lightnings.get(i).update();
             if (lightnings.get(i).shouldRemove()) {
                 lightnings.remove(i);
                 i--;
             }
-            lightnings.get(i).showHitbox(hitboxFlag);
         }
 
         // cek kedap kedip
