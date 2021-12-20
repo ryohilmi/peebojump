@@ -5,6 +5,7 @@ import Entity.PlayerObject.*;
 import Entity.Balloon;
 import Main.GamePanel;
 import TileMap.*;
+import Utility.Time;
 
 import java.awt.*;
 import java.awt.event.KeyEvent;
@@ -19,9 +20,12 @@ public class Level1State extends State {
 
     private boolean show_hitbox;
 
+    private final Time time;
+
     public Level1State(StateManager gsm) {
         this.stateManager = gsm;
         show_hitbox = false;
+        time = new Time();
         init();
     }
 
@@ -40,7 +44,7 @@ public class Level1State extends State {
 
         bg = new Background("/Backgrounds/background.png");
 
-        player = new Player(tileMap);
+        player = new Player(tileMap, time);
         player.setPosition(50, 0);
 
         hud = new HUD(player);
@@ -49,6 +53,8 @@ public class Level1State extends State {
 
         balloon = new Balloon(tileMap);
         balloon.setPosition(100, 190);
+
+        time.start();
     }
 
     private void populateEnemies() {

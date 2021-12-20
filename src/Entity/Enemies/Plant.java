@@ -1,13 +1,12 @@
 package Entity.Enemies;
 
-import Entity.*;
+import Entity.Animation;
 import TileMap.TileMap;
 
+import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
-
-import javax.imageio.ImageIO;
 
 public class Plant extends Enemy {
 
@@ -21,6 +20,7 @@ public class Plant extends Enemy {
 
         super(tm);
 
+        time_weight = 3;
         type = PLANT;
 
         // movement

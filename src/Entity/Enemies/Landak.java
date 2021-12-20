@@ -1,13 +1,11 @@
 package Entity.Enemies;
 
-import Entity.*;
-import Entity.Enemies.*;
+import Entity.Animation;
 import TileMap.TileMap;
 
-import java.awt.image.BufferedImage;
-import java.awt.Graphics2D;
-
 import javax.imageio.ImageIO;
+import java.awt.*;
+import java.awt.image.BufferedImage;
 
 public class Landak extends Enemy {
 
@@ -17,7 +15,7 @@ public class Landak extends Enemy {
 	public Landak(TileMap tm) {
 
 		super(tm);
-
+		time_weight = 4;
 		type = LANDAK;
 
 		// movement

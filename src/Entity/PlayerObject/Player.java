@@ -4,6 +4,8 @@ import Audio.AudioPlayer;
 import TileMap.*;
 import Entity.*;
 import Entity.Enemies.*;
+import Utility.Time;
+
 import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.image.BufferedImage;
@@ -66,10 +68,12 @@ public class Player extends MapObject {
 
     private final HashMap<String, AudioPlayer> sfx;
 
-    public Player(TileMap tm) {
+    private final Time time;
+
+    public Player(TileMap tm, Time time) {
 
         super(tm);
-
+        this.time = time;
         width = 32;
         height = 42;
         cwidth = 30;
@@ -209,6 +213,7 @@ public class Player extends MapObject {
                                     e.gety() > y - (height >> 1) &&
                                     e.gety() < y + (height >> 1)
                     ) {
+                        time.bonusTime(e.getTimeWeight());
                         e.hit(scratchDamage);
                     }
                 } else {
@@ -218,6 +223,7 @@ public class Player extends MapObject {
                                     e.gety() > y - (height >> 1) &&
                                     e.gety() < y + (height >> 1)
                     ) {
+                        time.bonusTime(e.getTimeWeight());
                         e.hit(scratchDamage);
                     }
                 }
@@ -228,6 +234,7 @@ public class Player extends MapObject {
                 if (lightning.intersects(e)) {
                     e.hit(lightningDmg);
                     lightning.setHit();
+                    time.bonusTime(e.getTimeWeight() + 2);
                     break;
                 }
             }
