@@ -111,6 +111,11 @@ public class Level2State extends State {
         balloon.showHitbox(show_hitbox);
         // update player
         player.update();
+
+        if (player.getHealth() <= 0) {
+            stateManager.setState(StateManager.DEATHSTATE);
+        }
+
         // update attack
         player.checkAttack(enemies);
         // update enemy
@@ -127,8 +132,8 @@ public class Level2State extends State {
         // update balloon
         balloon.update();
         if(player.intersects(balloon)) {
-            // TODO: game end
-            player.hit(100);
+            // TODO: write high score
+            stateManager.setState(StateManager.LEVEL3STATE);
         }
         tileMap.setPosition(
                 (GamePanel.WIDTH >> 1) - player.getx(),

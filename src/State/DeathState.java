@@ -111,10 +111,10 @@ public class DeathState extends State {
                 currentLevel = StateManager.LEVEL1STATE;
             }
             else if (latestLevel == 2) {
-                // TODO: Level 2
+                currentLevel = StateManager.LEVEL2STATE;
             }
             else if (latestLevel == 3) {
-                // TODO: Level 3
+                currentLevel = stateManager.LEVEL3STATE;
             }
 
             stateManager.setState(currentLevel);
