@@ -136,7 +136,7 @@ public class Level2State extends State {
         // update balloon
         balloon.update();
         if(player.intersects(balloon)) {
-            SaveData.writeHighScore(1, String.valueOf(time.getSecond())+"."+String.valueOf(time.getMilisecond()));
+            SaveData.writeHighScore(2, String.valueOf(time.getSecond())+"."+String.valueOf(time.getMilisecond()));
             stateManager.setState(StateManager.LEVEL3STATE);
         }
         tileMap.setPosition(
