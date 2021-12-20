@@ -5,7 +5,7 @@ public class StateManager {
     private State[] gameStates;
     private int currentState;
 
-    public static final int NUMGAMESTATES = 2;
+    public static final int NUMGAMESTATES = 3;
     public static final int MENUSTATE = 0;
     public static final int DEATHSTATE = 1;
     public static final int LEVEL1STATE = 2;

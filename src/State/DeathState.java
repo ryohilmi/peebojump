@@ -103,10 +103,24 @@ public class DeathState extends State {
 
     private void select() {
         if (currentChoice == 0) {
-            stateManager.setState(StateManager.LEVEL1STATE);
+
+            int currentLevel = StateManager.LEVEL1STATE;
+            int latestLevel = SaveData.readLatestLevel();
+
+            if (latestLevel == 1) {
+                currentLevel = StateManager.LEVEL1STATE;
+            }
+            else if (latestLevel == 2) {
+                // TODO: Level 2
+            }
+            else if (latestLevel == 3) {
+                // TODO: Level 3
+            }
+
+            stateManager.setState(currentLevel);
         }
-        if (currentChoice == 2) {
-            System.exit(0);
+        if (currentChoice == 1) {
+            stateManager.setState(StateManager.MENUSTATE);
         }
 
     }
