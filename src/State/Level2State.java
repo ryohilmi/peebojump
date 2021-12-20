@@ -10,7 +10,6 @@ import Entity.HUD;
 import Entity.PlayerObject.Player;
 import Main.GamePanel;
 import TileMap.*;
-import Utility.SaveData;
 import Utility.Time;
 
 import java.awt.*;
@@ -129,11 +128,14 @@ public class Level2State extends State {
                 explosions.add(
                         new Explosion(e.getx(), e.gety()));
             }
+            if(e.getType() != e.LANDAK){
+                e.detectPlayer(player);
+            }
         }
         // update balloon
         balloon.update();
         if(player.intersects(balloon)) {
-            SaveData.writeHighScore(2, String.valueOf(time.getSecond())+"."+String.valueOf(time.getMilisecond()));
+            // TODO: write high score
             stateManager.setState(StateManager.LEVEL3STATE);
         }
         tileMap.setPosition(

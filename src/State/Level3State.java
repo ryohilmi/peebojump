@@ -9,7 +9,6 @@ import Entity.HUD;
 import Entity.PlayerObject.Player;
 import Main.GamePanel;
 import TileMap.*;
-import Utility.SaveData;
 import Utility.Time;
 
 import java.awt.*;
@@ -120,10 +119,25 @@ public class Level3State extends State {
             stateManager.setState(StateManager.DEATHSTATE);
         }
 
+        // update enemy
+        for(int i = 0; i < enemies.size(); i++) {
+            Enemy e = enemies.get(i);
+            e.update();
+            if(e.isDead()) {
+                enemies.remove(i);
+                i--;
+                explosions.add(
+                        new Explosion(e.getx(), e.gety()));
+            }
+            if(e.getType() != e.LANDAK){
+                e.detectPlayer(player);
+            }
+        }
+
         // update balloon
         balloon.update();
         if(player.intersects(balloon)) {
-            SaveData.writeHighScore(1, String.valueOf(time.getSecond())+"."+String.valueOf(time.getMilisecond()));
+            // TODO: write high score
             stateManager.setState(StateManager.MENUSTATE);
         }
         tileMap.setPosition(
