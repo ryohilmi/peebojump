@@ -1,6 +1,7 @@
 package Entity.Enemies;
 
 import Entity.*;
+import Entity.Enemies.*;
 import TileMap.TileMap;
 
 import java.awt.image.BufferedImage;
@@ -33,6 +34,9 @@ public class Landak extends Enemy {
 		cwidth = 24;
 		cheight = 20;
 
+		// walk
+		walkAnimDelay = 110;
+
 		// health
 		health = maxHealth = 2;
 		damage = 1;
@@ -64,7 +68,7 @@ public class Landak extends Enemy {
 		currentAction = WALK;
 		animation = new Animation();
 		animation.setFrames(sprites);
-		animation.setDelay(110);
+		animation.setDelay(walkAnimDelay);
 
 		right = true;
 		facingRight = true;
