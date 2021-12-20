@@ -9,6 +9,7 @@ import java.awt.Rectangle;
 public abstract class MapObject {
 
 	protected boolean hitboxFlag = false; // TODO: remove pas production
+	protected boolean hit;
 	// tile stuff
 	protected TileMap tileMap;
 	protected int tileSize;
@@ -74,6 +75,7 @@ public abstract class MapObject {
 
 	protected int modify_rectangle_x = 0;
 	protected int modify_rectangle_y = 0;
+	protected boolean collided_with_tile= false;
 
 	// constructor
 	public MapObject(TileMap tm) {
