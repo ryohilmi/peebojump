@@ -47,7 +47,7 @@ public class Level3State extends State {
         player = new Player(tileMap, time);
         player.setPosition(1600, 3000);
 
-        hud = new HUD(player);
+        hud = new HUD(player, time);
 
         populateEnemies();
 

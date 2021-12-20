@@ -49,7 +49,7 @@ public class Level2State extends State {
         player = new Player(tileMap, time);
         player.setPosition(3000, 3025);
 
-        hud = new HUD(player);
+        hud = new HUD(player, time);
 
         populateEnemies();
 

@@ -46,7 +46,7 @@ public class Level1State extends State {
         player = new Player(tileMap, time);
         player.setPosition(900, 2525);
 
-        hud = new HUD(player);
+        hud = new HUD(player, time);
 
         populateEnemies();
 
@@ -160,7 +160,6 @@ public class Level1State extends State {
         // draw player
         player.draw(g);
 
-        hud.draw(g);
 
         // draw balon
         balloon.draw(g);
