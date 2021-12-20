@@ -8,13 +8,14 @@ public class StateManager {
     private int currentState;
     private int previousState;
 
-    public static final int NUMGAMESTATES = 6;
+    public static final int NUMGAMESTATES = 7;
     public static final int MENUSTATE = 0;
     public static final int DEATHSTATE = 1;
     public static final int LEVEL1STATE = 2;
     public static final int LEVEL2STATE = 3;
     public static final int LEVEL3STATE = 4;
     public static final int HIGHSCORESTATE = 5;
+    public static final int ABOUTSTATE = 6;
 
 
     public StateManager() {
@@ -47,6 +48,9 @@ public class StateManager {
         }
         if(state == HIGHSCORESTATE) {
             gameStates[state] = new HighScoreState(this);
+        }
+        if(state == ABOUTSTATE) {
+            gameStates[state] = new AboutState(this);
         }
     }
 
