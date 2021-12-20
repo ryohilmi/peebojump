@@ -8,10 +8,48 @@ class Enemy extends MapObject{
 @to be overriden by children
 + update()
 --
-boolean dead
-int damage
-boolean flinching
-long flinchTimer
+int time_weight;
+
+int health;
+int maxHealth;
+boolean dead;
+int damage;
+int type;
+
+boolean flinching;
+long flinchTimer;
+
+// attack
+boolean attackRight;
+boolean attackLeft;
+int attackWidth;
+int attackDelay;
+int attackCounter;
+int attackAnimDelay;
+
+// idle
+boolean idle;
+int idleWidth;
+int idleTime;
+int idleCounter;
+int idleAnimDelay;
+
+// walk
+boolean walk;
+int walkWidth;
+int walkAnimDelay;
+int walkCounter;
+int walkMaxDistance;
+
+// enemy type
+public static final int LANDAK = 0;
+public static final int PLANT = 1;
+public static final int KADAL = 2;
+
+// enemy action
+static final int IDLE = 0;
+static final int ATTACK = 1;
+static final int WALK = 2;
 }
 class Kadal {
 // manually assigning MapObject atr
