@@ -33,7 +33,7 @@ public class MenuState extends State {
             bg.setVector(-0.3, 0);
 
             Font zero4b = Font.createFont(Font.TRUETYPE_FONT, new File(Objects.requireNonNull(getClass().getResource("/Font/04b.TTF")).getPath()));
-            Font minecraft = Font.createFont(Font.TRUETYPE_FONT, new File(Objects.requireNonNull(getClass().getResource("/Font/Minecraft.TTF")).getPath()));
+            Font minecraft = Font.createFont(Font.TRUETYPE_FONT, new File(Objects.requireNonNull(getClass().getResource("/Font/Minecraft.ttf")).getPath()));
 
             GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
             ge.registerFont(zero4b);
@@ -41,11 +41,11 @@ public class MenuState extends State {
 
             titleColor = new Color(255, 235, 72);
             titleFont = new Font(
-                    "04b",
+                    "04b 30",
                     Font.PLAIN,
-                    50);
+                    25);
 
-            font = new Font("Minecraft", Font.PLAIN, 34);
+            font = new Font("Minecraft", Font.PLAIN, 17);
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -63,21 +63,21 @@ public class MenuState extends State {
 
         bg.draw(g);
 
-        Utility.horizontalCenteredText(g, "PeeboJump", GamePanel.WIDTH, 100, titleFont, Color.black);
+        Utility.horizontalCenteredText(g, "PeeboJump", GamePanel.WIDTH, 60, titleFont, Color.black);
 
-        Utility.horizontalCenteredText(g, "PeeboJump", GamePanel.WIDTH, 103, titleFont, titleColor);
+        Utility.horizontalCenteredText(g, "PeeboJump", GamePanel.WIDTH, 58, titleFont, titleColor);
 
         g.setFont(font);
         for (int i = 0; i < options.length; i++) {
             if (i == currentChoice) {
                 g.setColor(Color.WHITE);
-                g.setFont(g.getFont().deriveFont(28.0f));
+                g.setFont(g.getFont().deriveFont(18.0f));
             } else {
                 g.setColor(new Color(239, 71, 111));
-                g.setFont(g.getFont().deriveFont(24.0f));
+                g.setFont(g.getFont().deriveFont(16.0f));
             }
 
-            Utility.horizontalCenteredText(g, options[i], GamePanel.WIDTH, 150 + i * 50, g.getFont(), g.getColor());
+            Utility.horizontalCenteredText(g, options[i], GamePanel.WIDTH, 110 + i * 32, g.getFont(), g.getColor());
         }
     }
 
