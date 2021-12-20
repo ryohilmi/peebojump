@@ -2,9 +2,11 @@
 class Enemy extends MapObject{
 - constructor(TileMap)
 ==
-+ isDead(): bool
-+ getDamage(): int
-+ hit(int damage): void
++ getter()
++ hit(int hitDmd): void
++ update(): void
++ draw(Graphics2D): void
++ public void detectPlayer (Player player): void
 @to be overriden by children
 + update()
 --
@@ -57,11 +59,9 @@ class Kadal {
 // set facing
 - constructor(TileMap)
 ==
-+ getter()
-+ hit(int hitDmd): void
++ getNextPosition(): void
 + update(): void
 + draw(Graphics2D): void
-+ public void detectPlayer (Player player): void
 --tounge atk--
 bool is_firing
 int cooldown
