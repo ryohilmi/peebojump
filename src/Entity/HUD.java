@@ -1,6 +1,6 @@
 package Entity;
 
-import Entity.Player.Player;
+import Entity.PlayerObject.Player;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
