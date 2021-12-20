@@ -9,6 +9,7 @@ import java.awt.Rectangle;
 public abstract class MapObject {
 
 	protected boolean hitboxFlag = false; // TODO: remove pas production
+	protected boolean hit;
 	// tile stuff
 	protected TileMap tileMap;
 	protected int tileSize;
@@ -44,6 +45,8 @@ public abstract class MapObject {
 	protected boolean topRight;
 	protected boolean bottomLeft;
 	protected boolean bottomRight;
+	protected boolean bottomLeftThrough;
+	protected boolean bottomRightThrough;
 
 	// stretching collision
 	protected boolean stretchDone;
@@ -74,6 +77,7 @@ public abstract class MapObject {
 
 	protected int modify_rectangle_x = 0;
 	protected int modify_rectangle_y = 0;
+	protected boolean collided_with_tile= false;
 
 	// constructor
 	public MapObject(TileMap tm) {
@@ -122,6 +126,18 @@ public abstract class MapObject {
 
 	}
 
+	public void calculateBottom(double x, double y) {
+		int leftTile = (int)(x - cwidth / 2) / tileSize;
+		int rightTile = (int)(x + cwidth / 2 - 1) / tileSize;
+		int bottomTile = (int)(y + cheight / 2) / tileSize;
+
+		int bl = tileMap.getType(bottomTile, leftTile);
+		int br = tileMap.getType(bottomTile, rightTile);
+
+		bottomLeftThrough = bl == Tile.THROUGH;
+		bottomRightThrough = br == Tile.THROUGH;
+	}
+
 	public void checkTileMapCollision() {
 
 		currCol = (int)x / tileSize;
@@ -134,20 +150,22 @@ public abstract class MapObject {
 		ytemp = y;
 
 		calculateCorners(x, ydest);
+		calculateBottom(x, ydest);
+
 		if(dy < 0) {
 			if(topLeft || topRight) {
 				dy = 0;
-				ytemp = currRow * tileSize + (cheight >> 1);
+				ytemp = currRow * tileSize + cheight / 2;
 			}
 			else {
 				ytemp += dy;
 			}
 		}
 		if(dy > 0) {
-			if(bottomLeft || bottomRight) {
+			if(bottomLeft || bottomRight || bottomLeftThrough || bottomRightThrough) {
 				dy = 0;
 				falling = false;
-				ytemp = (currRow + 1) * tileSize - (cheight >> 1);
+				ytemp = (currRow + 1) * tileSize - cheight / 2;
 			}
 			else {
 				ytemp += dy;
@@ -155,10 +173,12 @@ public abstract class MapObject {
 		}
 
 		calculateCorners(xdest, y);
+		calculateBottom(xdest, y);
+
 		if(dx < 0) {
 			if(topLeft || bottomLeft) {
 				dx = 0;
-				xtemp = currCol * tileSize + (cwidth >> 1);
+				xtemp = currCol * tileSize + cwidth / 2;
 			}
 			else {
 				xtemp += dx;
@@ -167,7 +187,7 @@ public abstract class MapObject {
 		if(dx > 0) {
 			if(topRight || bottomRight) {
 				dx = 0;
-				xtemp = (currCol + 1) * tileSize - (cwidth >> 1);
+				xtemp = (currCol + 1) * tileSize - cwidth / 2;
 			}
 			else {
 				xtemp += dx;
@@ -176,7 +196,8 @@ public abstract class MapObject {
 
 		if(!falling) {
 			calculateCorners(x, ydest + 1);
-			if(!bottomLeft && !bottomRight) {
+			calculateBottom(x, ydest + 1);
+			if(!bottomLeft && !bottomRight && !bottomLeftThrough && !bottomRightThrough) {
 				falling = true;
 			}
 		}
