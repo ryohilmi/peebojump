@@ -1,9 +1,12 @@
 package State;
 
+import Utility.SaveData;
+
 public class StateManager {
 
     private State[] gameStates;
     private int currentState;
+    private int previousState;
 
     public static final int NUMGAMESTATES = 3;
     public static final int MENUSTATE = 0;
@@ -14,18 +17,22 @@ public class StateManager {
 
         gameStates = new State[NUMGAMESTATES];
 
-        currentState = DEATHSTATE;
+        previousState = -1;
+        currentState = MENUSTATE;
         loadState(currentState);
-
     }
 
     private void loadState(int state) {
-        if(state == MENUSTATE)
+        if(state == MENUSTATE) {
             gameStates[state] = new MenuState(this);
-        if(state == DEATHSTATE)
+        }
+        if(state == DEATHSTATE) {
             gameStates[state] = new DeathState(this);
-        if(state == LEVEL1STATE)
+        }
+        if(state == LEVEL1STATE) {
             gameStates[state] = new Level1State(this);
+            SaveData.writeLatestLevel(SaveData.LEVEL1);
+        }
     }
 
     private void unloadState(int state) {
@@ -33,10 +40,10 @@ public class StateManager {
     }
 
     public void setState(int state) {
+        previousState = currentState;
         unloadState(currentState);
         currentState = state;
         loadState(currentState);
-        //gameStates[currentState].init();
     }
 
     public void update() {

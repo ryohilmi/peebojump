@@ -1,7 +1,6 @@
 package Entity.Enemies;
 
 import Entity.Animation;
-import Entity.Enemies.Enemy;
 import TileMap.TileMap;
 
 import javax.imageio.ImageIO;
@@ -20,7 +19,7 @@ public class Kadal extends Enemy {
     public Kadal(TileMap tm) {
 
         super(tm);
-
+        time_weight = 5;
         type = KADAL;
 
         // movement

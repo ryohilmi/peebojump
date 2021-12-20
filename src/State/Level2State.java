@@ -1,9 +1,13 @@
 package State;
 
-import Entity.*;
-import Entity.Enemies.*;
-import Entity.PlayerObject.*;
 import Entity.Balloon;
+import Entity.Enemies.Enemy;
+import Entity.Enemies.Kadal;
+import Entity.Enemies.Landak;
+import Entity.Enemies.Plant;
+import Entity.Explosion;
+import Entity.HUD;
+import Entity.PlayerObject.Player;
 import Main.GamePanel;
 import TileMap.*;
 import Utility.Time;
@@ -12,7 +16,7 @@ import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 
-public class Level1State extends State {
+public class Level2State extends State {
     private TileMap tileMap;
     private Background bg;
     private HUD hud;
@@ -24,10 +28,9 @@ public class Level1State extends State {
     private Balloon balloon;
 
     private boolean show_hitbox;
-
     private final Time time;
 
-    public Level1State(StateManager gsm) {
+    public Level2State(StateManager gsm) {
         this.stateManager = gsm;
         show_hitbox = false;
         time = new Time();
@@ -37,23 +40,21 @@ public class Level1State extends State {
     public void init() {
         tileMap = new TileMap(32);
         tileMap.loadTiles("/Tilesets/tilepeebo.png");
-        tileMap.loadMap("/Maps/better1.map");
+        tileMap.loadMap("/Maps/better2.map");
         tileMap.setPosition(0, 0);
         tileMap.setTween(1);
 
         bg = new Background("/Backgrounds/backgroundlevel.png");
 
         player = new Player(tileMap, time);
-        player.setPosition(900, 2525);
+        player.setPosition(3000, 3025);
 
         hud = new HUD(player);
 
         populateEnemies();
 
-        explosions = new ArrayList<Explosion>();
-
         balloon = new Balloon(tileMap);
-        balloon.setPosition(3104, 160);
+        balloon.setPosition(64, 96);
         time.start();
     }
 
@@ -66,9 +67,10 @@ public class Level1State extends State {
         Plant p;
 
         Point[] LandakPoint = new Point[] {
-                new Point(2432, 2528),
-                new Point(2816, 1664),
-                new Point(2176, 1888)
+                new Point(736, 2976),
+                new Point(192, 2880),
+                new Point(288, 2400),
+                new Point(96, 2176)
         };
         for(int i = 0; i < LandakPoint.length; i++) {
             l = new Landak(tileMap);
@@ -77,9 +79,10 @@ public class Level1State extends State {
         }
 
         Point[] KadalPoint = new Point[]{
-                new Point(1696, 1952),
-                new Point(1312, 1856),
-                new Point(704, 1856)
+                new Point(512, 2176),
+                new Point(288, 1920),
+                new Point(704, 1856),
+                new Point(2752, 992)
         };
 
         for (int i = 0; i < KadalPoint.length; i++)
@@ -90,8 +93,9 @@ public class Level1State extends State {
         }
 
         Point[] PlantPoint = new Point[]{
-                new Point(1376, 1088),
-                new Point(2528, 768)
+                new Point(2912, 992),
+                new Point(1984, 832),
+                new Point(576, 352)
         };
 
         for (int i = 0; i < PlantPoint.length; i++)
@@ -118,14 +122,6 @@ public class Level1State extends State {
                 i--;
                 explosions.add(
                         new Explosion(e.getx(), e.gety()));
-            }
-        }
-        // update explosion
-        for(int i = 0; i < explosions.size(); i++) {
-            explosions.get(i).update();
-            if(explosions.get(i).shouldRemove()) {
-                explosions.remove(i);
-                i--;
             }
         }
         // update balloon
@@ -164,19 +160,6 @@ public class Level1State extends State {
         for(int i = 0; i < enemies.size(); i++) {
             enemies.get(i).draw(g);
         }
-
-        // draw explosion
-        for(int i = 0; i < explosions.size(); i++) {
-            explosions.get(i).setMapPosition(
-                    (int)tileMap.getx(), (int)tileMap.gety());
-            explosions.get(i).draw(g);
-        }
-
-        // draw hud
-        hud.draw(g);
-
-        // draw balloon
-        balloon.draw(g);
     }
 
     public void keyPressed(int k) {

@@ -4,6 +4,8 @@ import Audio.AudioPlayer;
 import TileMap.*;
 import Entity.*;
 import Entity.Enemies.*;
+import Utility.Time;
+
 import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.image.BufferedImage;
@@ -66,21 +68,23 @@ public class Player extends MapObject {
 
     private final HashMap<String, AudioPlayer> sfx;
 
-    public Player(TileMap tm) {
+    private final Time time;
+
+    public Player(TileMap tm, Time time) {
 
         super(tm);
-
+        this.time = time;
         width = 32;
         height = 42;
         cwidth = 30;
         cheight = 30;
 
         moveSpeed = 0.3;
-        maxSpeed = 1.6;
+        maxSpeed = 3.2;
         stopSpeed = 0.4;
         fallSpeed = 0.15;
         maxFallSpeed = 4.0;
-        jumpStart = -4.8;
+        jumpStart = -6.9;
         stopJumpSpeed = 0.3;
 
         facingRight = true;
@@ -209,6 +213,7 @@ public class Player extends MapObject {
                                     e.gety() > y - (height >> 1) &&
                                     e.gety() < y + (height >> 1)
                     ) {
+                        time.bonusTime(e.getTimeWeight());
                         e.hit(scratchDamage);
                     }
                 } else {
@@ -218,6 +223,7 @@ public class Player extends MapObject {
                                     e.gety() > y - (height >> 1) &&
                                     e.gety() < y + (height >> 1)
                     ) {
+                        time.bonusTime(e.getTimeWeight());
                         e.hit(scratchDamage);
                     }
                 }
@@ -228,6 +234,7 @@ public class Player extends MapObject {
                 if (lightning.intersects(e)) {
                     e.hit(lightningDmg);
                     lightning.setHit();
+                    time.bonusTime(e.getTimeWeight() + 2);
                     break;
                 }
             }
@@ -328,12 +335,12 @@ public class Player extends MapObject {
 
         // update lightning
         for (int i = 0; i < lightnings.size(); i++) {
+            lightnings.get(i).showHitbox(hitboxFlag);
             lightnings.get(i).update();
             if (lightnings.get(i).shouldRemove()) {
                 lightnings.remove(i);
                 i--;
             }
-            lightnings.get(i).showHitbox(hitboxFlag);
         }
 
         // cek kedap kedip
