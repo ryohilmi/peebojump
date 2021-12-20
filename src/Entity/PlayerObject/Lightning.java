@@ -2,11 +2,12 @@ package Entity.PlayerObject;
 
 import Entity.Animation;
 import Entity.MapObject;
-import TileMap.*;
+import TileMap.TileMap;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.image.BufferedImage;
+import java.util.Objects;
 
 public class Lightning extends MapObject {
 
@@ -53,9 +54,9 @@ public class Lightning extends MapObject {
 		// load sprites
 		try {
 			BufferedImage spritesheet = ImageIO.read(
-					getClass().getResourceAsStream(
+					Objects.requireNonNull(getClass().getResourceAsStream(
 							"/Sprites/Player/lightning.png"
-					)
+					))
 			);
 
 			sprites = new BufferedImage[19];
@@ -84,35 +85,29 @@ public class Lightning extends MapObject {
 	public boolean shouldRemove() { return remove; }
 
 	public void update() {
-
-		System.out.println("dx = " + dx);
-
 		checkTileMapCollision();
+		int collide_r = tileMap.getType((int)((y - cheight / 2) / tileSize) + 1, (int)(x + cwidth) / tileSize);
+		int collide_l = tileMap.getType(((int)(y - cheight / 2) / tileSize) + 1, (int)((x - cwidth) / tileSize));
+		if (facingRight) {
+			if(collide_r == 1)
+				remove = true;
+		} else {
+			if (collide_l == 1)
+				remove = true;
+		}
 		setPosition(xtemp, ytemp);
-		//getNextPosition();
-
 
 		if (!stretchDone) {
 			stretchCollision();
 		}
 
-		if(dx == 0 && !hit) {
-			setHit();
-		}
-
 		animation.update();
-		if (animation.hasPlayedOnce()) {
-			//System.out.println("aih");
+		if (animation.hasPlayedOnce() || hit || collided_with_tile) {
 			remove = true;
 			dx = 0;
 			cwidth = 0;
 			cheight = 0;
 		}
-
-		System.out.println("hit = " + hit);
-		System.out.println("dx = " + dx);
-		System.out.println("hasplayed = " + animation.hasPlayedOnce());
-
 	}
 
 	public void draw(Graphics2D g) {
