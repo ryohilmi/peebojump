@@ -6,6 +6,8 @@ import Entity.PlayerObject.*;
 
 public class Enemy extends MapObject {
 
+	protected int time_weight;
+
 	protected int health;
 	protected int maxHealth;
 	protected boolean dead;
@@ -102,6 +104,10 @@ public class Enemy extends MapObject {
 				facingRight = true;
 			}
 		}
+	}
+
+	public int getTimeWeight() {
+		return time_weight;
 	}
 
 	public void update() {}
