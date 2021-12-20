@@ -7,7 +7,8 @@ import TileMap.Tile;
 import java.awt.Rectangle;
 
 public abstract class MapObject {
-	
+
+	protected boolean hitboxFlag = false; // TODO: remove pas production
 	// tile stuff
 	protected TileMap tileMap;
 	protected int tileSize;
@@ -30,7 +31,7 @@ public abstract class MapObject {
 	protected int cheight;
 	protected int mincwidth;
 	protected int maxcwidth;
-	
+
 	// collision
 	protected int currRow;
 	protected int currCol;
@@ -46,7 +47,8 @@ public abstract class MapObject {
 
 	// stretching collision
 	protected boolean stretchDone;
-	
+	protected int stretchSpeed;
+
 	// animation
 	protected Animation animation;
 	protected int currentAction;
@@ -79,7 +81,6 @@ public abstract class MapObject {
 	public boolean intersects(MapObject o) {
 		Rectangle r1 = getRectangle();
 		Rectangle r2 = o.getRectangle();
-		//System.out.println(r1.intersects(r2));
 		return r1.intersects(r2);
 	}
 	
@@ -121,7 +122,7 @@ public abstract class MapObject {
 		
 		xdest = x + dx;
 		ydest = y + dy;
-		
+
 		xtemp = x;
 		ytemp = y;
 		
@@ -195,7 +196,7 @@ public abstract class MapObject {
 			}
 		}
 	}
-	
+
 	public int getx() { return (int)x; }
 	public int gety() { return (int)y; }
 	public int getWidth() { return width; }
