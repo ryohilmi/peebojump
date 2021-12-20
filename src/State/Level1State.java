@@ -1,5 +1,6 @@
 package State;
 
+import Entity.HUD;
 import Entity.PlayerObject.*;
 import Main.GamePanel;
 import TileMap.Background;
@@ -11,6 +12,7 @@ import java.awt.event.KeyEvent;
 public class Level1State extends State {
     private TileMap tileMap;
     private Background bg;
+    private HUD hud;
 
     private Player player;
 
@@ -36,6 +38,8 @@ public class Level1State extends State {
 
         player = new Player(tileMap);
         player.setPosition(50, 0);
+
+        hud = new HUD(player);
 
         populateEnemies();
 
@@ -69,6 +73,8 @@ public class Level1State extends State {
 
         // draw player
         player.draw(g);
+
+        hud.draw(g);
     }
 
     public void keyPressed(int k) {
