@@ -19,9 +19,11 @@ class Kadal {
 // set facing
 - constructor(TileMap)
 ==
-+ getNextPosition(): void
++ getter()
++ hit(int hitDmd): void
 + update(): void
 + draw(Graphics2D): void
++ public void detectPlayer (Player player): void
 --tounge atk--
 bool is_firing
 int cooldown
