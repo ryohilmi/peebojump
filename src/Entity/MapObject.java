@@ -72,10 +72,17 @@ public abstract class MapObject {
 	protected double jumpStart;
 	protected double stopJumpSpeed;
 
+	protected int modify_rectangle_x = 0;
+	protected int modify_rectangle_y = 0;
+
 	// constructor
 	public MapObject(TileMap tm) {
 		tileMap = tm;
 		tileSize = tm.getTileSize();
+	}
+	public void setRectModifier(int x, int y) {
+		modify_rectangle_x = x;
+		modify_rectangle_y = y;
 	}
 
 	public boolean intersects(MapObject o) {
@@ -86,14 +93,14 @@ public abstract class MapObject {
 
 	public Rectangle getRectangle() {
 		if(facingRight && right) {
-			return new Rectangle((int)(xtemp + xmap), (int)(ytemp + ymap), cwidth, cheight);
+			return new Rectangle((int)(xtemp + xmap) - (15 + modify_rectangle_x), (int)(ytemp + ymap) - (10 + modify_rectangle_y), cwidth, cheight);
 		}
 
 		if(!facingRight && left) {
-			return new Rectangle((int)(xinverse + xtemp + xmap), (int)(ytemp + ymap), cwidth, cheight);
+			return new Rectangle((int)(xinverse + xtemp + xmap) - (15 + modify_rectangle_x), (int)(ytemp + ymap) - (15 + modify_rectangle_x), cwidth, cheight);
 		}
 
-		return new Rectangle((int)(xtemp + xmap), (int)(ytemp + ymap), cwidth, cheight);
+		return new Rectangle((int)(xtemp + xmap) - (15 + modify_rectangle_x), (int)(ytemp + ymap) - (10 + modify_rectangle_y), cwidth, cheight);
 	}
 
 	public void calculateCorners(double x, double y) {
@@ -130,7 +137,7 @@ public abstract class MapObject {
 		if(dy < 0) {
 			if(topLeft || topRight) {
 				dy = 0;
-				ytemp = currRow * tileSize + cheight / 2;
+				ytemp = currRow * tileSize + (cheight >> 1);
 			}
 			else {
 				ytemp += dy;
@@ -140,7 +147,7 @@ public abstract class MapObject {
 			if(bottomLeft || bottomRight) {
 				dy = 0;
 				falling = false;
-				ytemp = (currRow + 1) * tileSize - cheight / 2;
+				ytemp = (currRow + 1) * tileSize - (cheight >> 1);
 			}
 			else {
 				ytemp += dy;
@@ -151,7 +158,7 @@ public abstract class MapObject {
 		if(dx < 0) {
 			if(topLeft || bottomLeft) {
 				dx = 0;
-				xtemp = currCol * tileSize + cwidth / 2;
+				xtemp = currCol * tileSize + (cwidth >> 1);
 			}
 			else {
 				xtemp += dx;
@@ -160,7 +167,7 @@ public abstract class MapObject {
 		if(dx > 0) {
 			if(topRight || bottomRight) {
 				dx = 0;
-				xtemp = (currCol + 1) * tileSize - cwidth / 2;
+				xtemp = (currCol + 1) * tileSize - (cwidth >> 1);
 			}
 			else {
 				xtemp += dx;
@@ -232,6 +239,11 @@ public abstract class MapObject {
 	}
 
 	public void draw(java.awt.Graphics2D g) {
+		// TODO: remove buat production
+		if (hitboxFlag) {
+			Rectangle rectangle = getRectangle();
+			g.drawRect((int)rectangle.getX(), (int)rectangle.getY(), (int)rectangle.getWidth(), (int)rectangle.getHeight());
+		}
 		if(facingRight) {
 			g.drawImage(
 					animation.getImage(),
@@ -250,9 +262,6 @@ public abstract class MapObject {
 					null
 			);
 		}
-		if(facingRight) { g.drawRect((int)(xtemp + xmap), (int)(ytemp + ymap), cwidth, cheight); }
-		if(!facingRight) { g.drawRect((int)(xinverse + xtemp + xmap), (int)(ytemp + ymap), cwidth, cheight); }
-
 	}
 
 }

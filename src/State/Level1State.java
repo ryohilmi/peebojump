@@ -2,9 +2,9 @@ package State;
 
 import Entity.HUD;
 import Entity.PlayerObject.*;
+import Entity.Balloon;
 import Main.GamePanel;
-import TileMap.Background;
-import TileMap.TileMap;
+import TileMap.*;
 
 import java.awt.*;
 import java.awt.event.KeyEvent;
@@ -15,9 +15,13 @@ public class Level1State extends State {
     private HUD hud;
 
     private Player player;
+    private Balloon balloon;
+
+    private boolean show_hitbox;
 
     public Level1State(StateManager gsm) {
         this.stateManager = gsm;
+        show_hitbox = false;
         init();
     }
 
@@ -43,6 +47,8 @@ public class Level1State extends State {
 
         populateEnemies();
 
+        balloon = new Balloon(tileMap);
+        balloon.setPosition(100, 190);
     }
 
     private void populateEnemies() {
@@ -50,9 +56,16 @@ public class Level1State extends State {
     }
 
     public void update() {
-
+        player.showHitbox(show_hitbox);
+        balloon.showHitbox(show_hitbox);
         // update player
         player.update();
+        // update balloon
+        balloon.update();
+        if(player.intersects(balloon)) {
+            // TODO: game end
+            player.hit(100);
+        }
         tileMap.setPosition(
                 (GamePanel.WIDTH >> 1) - player.getx(),
                 (GamePanel.HEIGHT >> 1) - player.gety()
@@ -75,6 +88,9 @@ public class Level1State extends State {
         player.draw(g);
 
         hud.draw(g);
+
+        // draw balon
+        balloon.draw(g);
     }
 
     public void keyPressed(int k) {
@@ -86,6 +102,7 @@ public class Level1State extends State {
         if(k == KeyEvent.VK_W) player.setJumping(true);
         if(k == KeyEvent.VK_Z) player.setScratching();
         if(k == KeyEvent.VK_X) player.setFiring();
+        if(k == KeyEvent.VK_H) show_hitbox = !show_hitbox;
     }
 
     public void keyReleased(int k) {
