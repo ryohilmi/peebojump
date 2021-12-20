@@ -1,12 +1,12 @@
 package State;
 
+import Main.GamePanel;
+import TileMap.*;
+import Utility.*;
 import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.io.File;
-
-import Main.GamePanel;
-import TileMap.Background;
-import Utility.Utility;
+import java.util.Objects;
 
 public class MenuState extends State {
 
@@ -32,8 +32,8 @@ public class MenuState extends State {
             bg = new Background("/Backgrounds/background.png");
             bg.setVector(-0.3, 0);
 
-            Font zero4b = Font.createFont(Font.TRUETYPE_FONT, new File(getClass().getResource("/Font/04b.TTF").getPath()));
-            Font minecraft = Font.createFont(Font.TRUETYPE_FONT, new File(getClass().getResource("/Font/Minecraft.TTF").getPath()));
+            Font zero4b = Font.createFont(Font.TRUETYPE_FONT, new File(Objects.requireNonNull(getClass().getResource("/Font/04b.TTF")).getPath()));
+            Font minecraft = Font.createFont(Font.TRUETYPE_FONT, new File(Objects.requireNonNull(getClass().getResource("/Font/Minecraft.TTF")).getPath()));
 
             GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
             ge.registerFont(zero4b);
@@ -43,7 +43,7 @@ public class MenuState extends State {
             titleFont = new Font(
                     "04b",
                     Font.PLAIN,
-                    60);
+                    50);
 
             font = new Font("Minecraft", Font.PLAIN, 34);
 
@@ -63,21 +63,21 @@ public class MenuState extends State {
 
         bg.draw(g);
 
-        Utility.horizontalCenteredText(g, "PeeboJump", GamePanel.WIDTH, 153, titleFont, Color.black);
+        Utility.horizontalCenteredText(g, "PeeboJump", GamePanel.WIDTH, 100, titleFont, Color.black);
 
-        Utility.horizontalCenteredText(g, "PeeboJump", GamePanel.WIDTH, 150, titleFont, titleColor);
+        Utility.horizontalCenteredText(g, "PeeboJump", GamePanel.WIDTH, 103, titleFont, titleColor);
 
         g.setFont(font);
         for (int i = 0; i < options.length; i++) {
             if (i == currentChoice) {
                 g.setColor(Color.WHITE);
-                g.setFont(g.getFont().deriveFont(38.0f));
+                g.setFont(g.getFont().deriveFont(28.0f));
             } else {
                 g.setColor(new Color(239, 71, 111));
-                g.setFont(g.getFont().deriveFont(34.0f));
+                g.setFont(g.getFont().deriveFont(24.0f));
             }
 
-            Utility.horizontalCenteredText(g, options[i], GamePanel.WIDTH, 250 + i * 50, g.getFont(), g.getColor());
+            Utility.horizontalCenteredText(g, options[i], GamePanel.WIDTH, 150 + i * 50, g.getFont(), g.getColor());
         }
     }
 
@@ -101,10 +101,7 @@ public class MenuState extends State {
 
     private void select() {
         if (currentChoice == 0) {
-            // TODO : New Game
-        }
-        if (currentChoice == 1) {
-            // TODO : Continue
+            stateManager.setState(StateManager.LEVEL1STATE);
         }
         if (currentChoice == 2) {
             System.exit(0);
