@@ -5,6 +5,7 @@ import Entity.Enemies.Enemy;
 import Entity.Enemies.Kadal;
 import Entity.Enemies.Landak;
 import Entity.Enemies.Plant;
+import Entity.Explosion;
 import Entity.HUD;
 import Entity.PlayerObject.Player;
 import Main.GamePanel;
@@ -22,6 +23,7 @@ public class Level3State extends State {
     private HUD hud;
 
     private ArrayList<Enemy> enemies;
+    private ArrayList<Explosion> explosions;
 
     private Player player;
     private Balloon balloon;
