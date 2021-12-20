@@ -1,5 +1,7 @@
 package State;
 
+import Entity.HUD;
+import Entity.PlayerObject.*;
 import Entity.Balloon;
 import Entity.Player.Player;
 import Main.GamePanel;
@@ -11,6 +13,7 @@ import java.awt.event.KeyEvent;
 public class Level1State extends State {
     private TileMap tileMap;
     private Background bg;
+    private HUD hud;
 
     private Player player;
     private Balloon balloon;
@@ -25,7 +28,7 @@ public class Level1State extends State {
 
     public void init() {
         tileMap = new TileMap(32);
-        tileMap.loadTiles("/Tile/tile.png");
+        tileMap.loadTiles("/Tilesets/tile.png");
         tileMap.loadMap("/Maps/temp.map");
         tileMap.setPosition(0, 0);
         tileMap.setTween(1);
@@ -40,6 +43,8 @@ public class Level1State extends State {
 
         player = new Player(tileMap);
         player.setPosition(50, 0);
+
+        hud = new HUD(player);
 
         populateEnemies();
 
@@ -82,6 +87,8 @@ public class Level1State extends State {
 
         // draw player
         player.draw(g);
+
+        hud.draw(g);
 
         // draw balon
         balloon.draw(g);
