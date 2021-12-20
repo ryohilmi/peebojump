@@ -1,11 +1,9 @@
 package Entity.PlayerObject;
 
 import Audio.AudioPlayer;
-import Entity.Animation;
-import Entity.Enemies.Enemy;
-import Entity.MapObject;
 import TileMap.*;
-
+import Entity.*;
+import Entity.Enemy.*;
 import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.image.BufferedImage;
@@ -25,11 +23,11 @@ public class Player extends MapObject {
     private boolean flinching;
     private long flinchTimer;
 
-    // fireball
+    // lightning properties
     private boolean firing;
     private final int fireCost;
-    private final int fireBallDamage;
-    private final ArrayList<Lightning> fireBalls;
+    private final int lightningDmg;
+    private final ArrayList<Lightning> lightnings;
 
     // scratch
     private boolean scratching;
@@ -90,75 +88,67 @@ public class Player extends MapObject {
         health = maxHealth = 5;
         fire = maxFire = 2500;
 
-        fireCost = 200;
-        fireBallDamage = 5;
-        fireBalls = new ArrayList<>();
+        fireCost = 1000;
+        lightningDmg = 5;
+        lightnings = new ArrayList<>();
 
         scratchDamage = 8;
         scratchRange = 40;
 
         // load sprites
         try {
+            BufferedImage spritesheet = ImageIO.read(
+                    Objects.requireNonNull(getClass().getResourceAsStream(
+                            "/Sprites/Player/peebo.png"
+                    ))
+            );
+
             sprites = new ArrayList<>();
             for (int i = 0; i < 5; i++) {
 
-                BufferedImage[] bi = new BufferedImage[numFrames[i]];
-                BufferedImage sprite;
-                int w, h;
+                BufferedImage[] bi =
+                        new BufferedImage[numFrames[i]];
 
-                // gatau bakal performance issue ato kgk kalo read satu2
-                // tapi biar lebih jelas aja ngambil sprite yang mana
-                switch (i) {
-                    case IDLE -> {
-                        sprite = ImageIO.read(
-                                Objects.requireNonNull(getClass().getResourceAsStream(
-                                        "/Sprites/Player/peebo_idle.png"
-                                ))
+                for(int j = 0; j < numFrames[i]; j++) {
+                    if (i == IDLE) {
+                        bi[j] = spritesheet.getSubimage(
+                                0,
+                                0,
+                                IDLE_W,
+                                IDLE_H
                         );
-                        w = width;
-                        h = height;
                     }
-                    case JUMPING -> {
-                        sprite = ImageIO.read(
-                                Objects.requireNonNull(getClass().getResourceAsStream(
-                                        "/Sprites/Player/peebo_jump.png"
-                                ))
+                    else if (i == WALKING) {
+                        bi[j] = spritesheet.getSubimage(
+                                j * WALKING_W,
+                                IDLE_H,
+                                WALKING_W,
+                                WALKING_H
                         );
-                        w = JUMPING_W;
-                        h = JUMPING_H;
                     }
-                    case WALKING -> {
-                        sprite = ImageIO.read(
-                                Objects.requireNonNull(getClass().getResourceAsStream(
-                                        "/Sprites/Player/peebo_walk.png"
-                                ))
+                    else if (i == JUMPING) {
+                        bi[j] = spritesheet.getSubimage(
+                                j * JUMPING_W,
+                                IDLE_H + WALKING_H,
+                                JUMPING_W,
+                                JUMPING_H
                         );
-                        w = WALKING_W;
-                        h = WALKING_H;
                     }
-                    case SCRATCHING -> {
-                        sprite = ImageIO.read(
-                                Objects.requireNonNull(getClass().getResourceAsStream(
-                                        "/Sprites/Player/peebo_melee.png"
-                                ))
+                    else if (i == SCRATCHING) {
+                        bi[j] = spritesheet.getSubimage(
+                                j * SCRATCHING_W,
+                                IDLE_H + WALKING_H + JUMPING_H,
+                                SCRATCHING_W,
+                                SCRATCHING_H
                         );
-                        h = SCRATCHING_H;
-                        w = SCRATCHING_W;
                     }
-                    case LIGHTNING -> {
-                        sprite = ImageIO.read(
-                                Objects.requireNonNull(getClass().getResourceAsStream(
-                                        "/Sprites/Player/peebo_range.png"
-                                ))
+                    else if (i == LIGHTNING) { bi[j] = spritesheet.getSubimage(
+                                j * LIGHTNING_W,
+                                IDLE_H + WALKING_H + JUMPING_H + SCRATCHING_H,
+                                LIGHTNING_W,
+                                LIGHTNING_H
                         );
-                        h = LIGHTNING_H;
-                        w = LIGHTNING_W;
                     }
-                    default -> throw new IllegalStateException("Unexpected enum action " + i);
-                }
-
-                for (int j = 0; j < numFrames[i]; j++) {
-                    bi[j] = sprite.getSubimage(j * w, 0, w, h);
                 }
 
                 sprites.add(bi);
@@ -234,9 +224,9 @@ public class Player extends MapObject {
             }
 
             // cek bila range atk kena
-            for (Lightning lightning : fireBalls) {
+            for (Lightning lightning : lightnings) {
                 if (lightning.intersects(e)) {
-                    e.hit(fireBallDamage);
+                    e.hit(lightningDmg);
                     lightning.setHit();
                     break;
                 }
@@ -261,7 +251,6 @@ public class Player extends MapObject {
     }
 
     private void getNextPosition() {
-
         // movement
         if (left) {
             dx -= moveSpeed;
@@ -330,17 +319,17 @@ public class Player extends MapObject {
         if (firing && currentAction != LIGHTNING) {
             if (fire > fireCost) {
                 fire -= fireCost;
-                Lightning fb = new Lightning(tileMap, facingRight);
-                fb.setPosition(x, y - 10);
-                fireBalls.add(fb);
+                Lightning lightning = new Lightning(tileMap, facingRight);
+                lightning.setPosition(x, y - 10);
+                lightnings.add(lightning);
             }
         }
 
         // update lightning
-        for (int i = 0; i < fireBalls.size(); i++) {
-            fireBalls.get(i).update();
-            if (fireBalls.get(i).shouldRemove()) {
-                fireBalls.remove(i);
+        for (int i = 0; i < lightnings.size(); i++) {
+            lightnings.get(i).update();
+            if (lightnings.get(i).shouldRemove()) {
+                lightnings.remove(i);
                 i--;
             }
         }
@@ -412,8 +401,8 @@ public class Player extends MapObject {
         setMapPosition();
 
         // draw lightning
-        for (Lightning fireBall : fireBalls) {
-            fireBall.draw(g);
+        for (Lightning lightning : lightnings) {
+            lightning.draw(g);
         }
 
         // draw player

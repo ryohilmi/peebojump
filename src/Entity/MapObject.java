@@ -81,7 +81,6 @@ public abstract class MapObject {
 	public boolean intersects(MapObject o) {
 		Rectangle r1 = getRectangle();
 		Rectangle r2 = o.getRectangle();
-		//System.out.println(r1.intersects(r2));
 		return r1.intersects(r2);
 	}
 
