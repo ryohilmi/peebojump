@@ -125,6 +125,9 @@ public class Level1State extends State {
                 explosions.add(
                         new Explosion(e.getx(), e.gety()));
             }
+            if(e.getType() != e.LANDAK){
+                e.detectPlayer(player);
+            }
         }
         // update explosion
         for(int i = 0; i < explosions.size(); i++) {
