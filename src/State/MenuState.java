@@ -16,6 +16,8 @@ public class MenuState extends State {
     private String[] options = {
             "New Game",
             "Continue",
+            "High Score",
+            "About",
             "Quit"
     };
 
@@ -103,7 +105,23 @@ public class MenuState extends State {
         if (currentChoice == 0) {
             stateManager.setState(StateManager.LEVEL1STATE);
         }
-        if (currentChoice == 2) {
+        if (currentChoice == 1) {
+            int currentLevel = StateManager.LEVEL1STATE;
+            int latestLevel = SaveData.readLatestLevel();
+
+            if (latestLevel == 1) {
+                currentLevel = StateManager.LEVEL1STATE;
+            }
+            else if (latestLevel == 2) {
+                currentLevel = StateManager.LEVEL2STATE;
+            }
+            else if (latestLevel == 3) {
+                currentLevel = stateManager.LEVEL3STATE;
+            }
+
+            stateManager.setState(currentLevel);
+        }
+        if (currentChoice == 4) {
             System.exit(0);
         }
 

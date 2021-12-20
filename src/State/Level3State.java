@@ -38,7 +38,7 @@ public class Level3State extends State {
     public void init() {
         tileMap = new TileMap(32);
         tileMap.loadTiles("/Tilesets/tilepeebo.png");
-        tileMap.loadMap("/Maps/better1.map");
+        tileMap.loadMap("/Maps/better3.map");
         tileMap.setPosition(0, 0);
         tileMap.setTween(1);
 
@@ -114,11 +114,16 @@ public class Level3State extends State {
         balloon.showHitbox(show_hitbox);
         // update player
         player.update();
+
+        if (player.getHealth() <= 0) {
+            stateManager.setState(StateManager.DEATHSTATE);
+        }
+
         // update balloon
         balloon.update();
         if(player.intersects(balloon)) {
-            // TODO: game end
-            player.hit(100);
+            // TODO: write high score
+            stateManager.setState(StateManager.MENUSTATE);
         }
         tileMap.setPosition(
                 (GamePanel.WIDTH >> 1) - player.getx(),
