@@ -1,8 +1,8 @@
 package Entity;
 
 import Entity.PlayerObject.Player;
-import Main.Game;
 import Main.GamePanel;
+import Utility.Time;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
@@ -17,8 +17,11 @@ public class HUD {
 	private BufferedImage healthImage;
 	private BufferedImage energyImage;
 	private Font font;
+
+	private Time time;
 	
-	public HUD(Player p) {
+	public HUD(Player p, Time time) {
+		this.time = time;
 		player = p;
 		try {
 			healthImage = ImageIO.read(
@@ -61,6 +64,9 @@ public class HUD {
 		g.drawString(health, 15, 15);
 		g.drawString(energy, GamePanel.WIDTH - g.getFontMetrics().stringWidth(energy) - 15, 15);
 
+		String timestamp = String.valueOf(time.getSecond()) + "." +time.getMilisecond();
+		g.setColor(Color.BLACK);
+		g.drawString(timestamp, 180, 15);
 
 		for (int i = 0; i < player.getHealth(); i++) {
 			g.drawImage(healthImage, i * 30 + 10, 25, null);
