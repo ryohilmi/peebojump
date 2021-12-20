@@ -64,7 +64,7 @@ public class HUD {
 		g.drawString(health, 15, 15);
 		g.drawString(energy, GamePanel.WIDTH - g.getFontMetrics().stringWidth(energy) - 15, 15);
 
-		String timestamp = time.getSecond() + "." +time.getMilisecond();
+		String timestamp = String.valueOf(time.getSecond()) + "." +time.getMilisecond();
 		g.setColor(Color.BLACK);
 		g.drawString(timestamp, 180, 15);
 		g.setColor(Color.WHITE);
