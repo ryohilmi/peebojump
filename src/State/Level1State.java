@@ -3,7 +3,6 @@ package State;
 import Entity.HUD;
 import Entity.PlayerObject.*;
 import Entity.Balloon;
-import Entity.Player.Player;
 import Main.GamePanel;
 import TileMap.*;
 
