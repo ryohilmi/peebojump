@@ -1,6 +1,8 @@
-package Entity;
+package Entity.Enemies;
 
 import TileMap.TileMap;
+import Entity.*;
+import Entity.PlayerObject.*;
 
 public class Enemy extends MapObject {
 
@@ -14,20 +16,26 @@ public class Enemy extends MapObject {
 	protected long flinchTimer;
 
 	// attack
-	protected boolean attack;
+	protected boolean attackRight;
+	protected boolean attackLeft;
 	protected int attackWidth;
 	protected int attackDelay;
 	protected int attackCounter;
+	protected int attackAnimDelay;
 
 	// idle
 	protected boolean idle;
 	protected int idleWidth;
 	protected int idleTime;
 	protected int idleCounter;
+	protected int idleAnimDelay;
 
 	// walk
 	protected boolean walk;
 	protected int walkWidth;
+	protected int walkAnimDelay;
+	protected int walkCounter;
+	protected int walkMaxDistance;
 
 	// enemy type
 	public static final int LANDAK = 0;
@@ -61,19 +69,17 @@ public class Enemy extends MapObject {
 	public void detectPlayer (Player player) {
 		if (attackCounter == 0) {
 			if (player.getx() <= x + (attackWidth / 2) && player.getx() > x) {
-				attack = true;
-				right = true;
-				facingRight = true;
+				attackRight = true;
+				attackLeft = false;
 				attackCounter++;
 			} else if (player.getx() >= x - (attackWidth / 2) && player.getx() < x) {
-				attack = true;
-				left = true;
-				facingRight = false;
+				attackRight = false;
+				attackLeft = true;
 				attackCounter++;
 			}
 		}
 		else {
-			if (attackCounter < attackDelay) { attackCounter++; }
+			if (attackCounter < attackDelay) { attackCounter++;}
 			else { attackCounter = 0; }
 		}
 	}
@@ -84,12 +90,13 @@ public class Enemy extends MapObject {
 		}
 		else if (idleCounter == idleTime) {
 			idle = false;
+			walk = true;
 			idleCounter = 0;
-			if (right && dx == 0) {
+			if (right) {
 				right = false;
 				left = true;
 				facingRight = false;
-			} else if (left && dx == 0) {
+			} else if (left) {
 				right = true;
 				left = false;
 				facingRight = true;

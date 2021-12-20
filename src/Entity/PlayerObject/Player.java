@@ -3,7 +3,7 @@ package Entity.PlayerObject;
 import Audio.AudioPlayer;
 import TileMap.*;
 import Entity.*;
-import Entity.Enemy.*;
+import Entity.Enemies.*;
 import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.image.BufferedImage;
