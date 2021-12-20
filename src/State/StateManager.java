@@ -1,5 +1,7 @@
 package State;
 
+import Utility.SaveData;
+
 public class StateManager {
 
     private State[] gameStates;
@@ -20,10 +22,13 @@ public class StateManager {
     }
 
     private void loadState(int state) {
-        if(state == MENUSTATE)
+        if(state == MENUSTATE) {
             gameStates[state] = new MenuState(this);
-        if(state == LEVEL1STATE)
+        }
+        if(state == LEVEL1STATE) {
             gameStates[state] = new Level1State(this);
+            SaveData.writeLatestLevel(SaveData.LEVEL1);
+        }
     }
 
     private void unloadState(int state) {

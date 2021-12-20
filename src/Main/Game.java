@@ -1,5 +1,7 @@
 package Main;
 
+import Utility.SaveData;
+
 import javax.swing.*;
 
 public class Game {
@@ -11,5 +13,7 @@ public class Game {
         window.setResizable(false);
         window.pack();
         window.setVisible(true);
+
+        SaveData.createIfNotExist();
     }
 }
