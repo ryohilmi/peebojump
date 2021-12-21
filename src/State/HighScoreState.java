@@ -63,8 +63,8 @@ public class HighScoreState extends State {
         g.setFont(font);
 
         String level1 = "Level 1: " + SaveData.readHighScore(SaveData.LEVEL1);
-        String level2 = "Level 2: " + SaveData.readHighScore(SaveData.LEVEL1);
-        String level3 = "Level 3: " + SaveData.readHighScore(SaveData.LEVEL1);
+        String level2 = "Level 2: " + SaveData.readHighScore(SaveData.LEVEL2);
+        String level3 = "Level 3: " + SaveData.readHighScore(SaveData.LEVEL3);
 
 
         g.setColor(Color.BLACK);
